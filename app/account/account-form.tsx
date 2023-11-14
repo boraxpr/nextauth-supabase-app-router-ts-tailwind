@@ -74,7 +74,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen h-full w-full ">
+    <div className="flex-1 flex flex-col w-full py-8 px-8 sm:max-w-md justify-start gap-2">
       <div className="bg-white shadow-md rounded px-12 pt-6 pb-8 mb-4">
         <div className="form-widget space-y-5">
           <div>

@@ -22,7 +22,8 @@ export default async function RootLayout({
   const {
     data: { session },
   } = await supabase.auth.getSession()
-  const username = session?.user?.username;
+  const username = session?.user?.email?.split('@')[0];
+
 
   return (
     <html lang="en" className={GeistSans.className}>
@@ -30,12 +31,18 @@ export default async function RootLayout({
         {session ? (
           <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
             <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-              <span>{username}</span>
+              <span>
+                <a href="/account">{username}</a>
+              </span>
+              <button>
+                <a href="/projects">Projects</a>
+              </button>
               <form action="/auth/signout" method="post">
                 <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover" type="submit">
                   Sign out
                 </button>
               </form>
+
             </div>
           </nav>
         ) : null}
