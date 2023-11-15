@@ -13,6 +13,10 @@ module.exports = {
           '50%': { transform: 'translate(0%,0%) skewX(-10deg)' },
           '100%': { transform: 'translate(0%,150%) skewX(0deg)' },
         },
+        slideInFromLeft: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -23,7 +27,8 @@ module.exports = {
         },
       },
       animation: {
-        fall: 'fall 3s ease infinite',
+        fall: 'fall 3s ease-in-out infinite',
+        slide_in: 'slideInFromLeft 0.5s ease-in-out',
       }
     },
   },
