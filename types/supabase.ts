@@ -13,19 +13,27 @@ export interface Database {
         Row: {
           created_at: string
           customer_name: string | null
-          id: number
+          id: string
         }
         Insert: {
           created_at?: string
           customer_name?: string | null
-          id?: number
+          id: string
         }
         Update: {
           created_at?: string
           customer_name?: string | null
-          id?: number
+          id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "customers_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       notes: {
         Row: {
