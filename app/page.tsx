@@ -38,7 +38,8 @@ export default async function Index() {
           {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
         </main>
       </div> */}
-      <main className="flex-grow"></main>
+      <main className="flex-grow">
+      </main>
 
       <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
         <p>

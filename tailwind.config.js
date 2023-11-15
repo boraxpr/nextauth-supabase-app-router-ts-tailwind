@@ -6,6 +6,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        //Our fall animation keyframes              
+        fall: {
+          '0%': { transform: 'translate(0%,-150%) skewX(0deg)' },
+          '50%': { transform: 'translate(0%,0%) skewX(-10deg)' },
+          '100%': { transform: 'translate(0%,150%) skewX(0deg)' },
+        },
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -14,6 +22,9 @@ module.exports = {
           'background-hover': 'hsl(var(--btn-background-hover))',
         },
       },
+      animation: {
+        fall: 'fall 3s ease infinite',
+      }
     },
   },
   plugins: [],
