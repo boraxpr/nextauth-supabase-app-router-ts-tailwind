@@ -88,56 +88,6 @@ export interface Database {
           }
         ]
       }
-      project: {
-        Row: {
-          customer_id: string | null
-          detail: string | null
-          price: number | null
-          project_name: string
-        }
-        Insert: {
-          customer_id?: string | null
-          detail?: string | null
-          price?: number | null
-          project_name: string
-        }
-        Update: {
-          customer_id?: string | null
-          detail?: string | null
-          price?: number | null
-          project_name?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "project_customer_id_fkey"
-            columns: ["customer_id"]
-            isOneToOne: false
-            referencedRelation: "customers"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      quotations: {
-        Row: {
-          created_date: string
-          currency: string | null
-          doc_num: string
-          status: string | null
-        }
-        Insert: {
-          created_date: string
-          currency?: string | null
-          doc_num: string
-          status?: string | null
-        }
-        Update: {
-          created_date?: string
-          currency?: string | null
-          doc_num?: string
-          status?: string | null
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
