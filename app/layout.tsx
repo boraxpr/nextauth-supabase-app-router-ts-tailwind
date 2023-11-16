@@ -3,6 +3,8 @@ import './globals.css'
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Database } from '@/types/supabase'
+import AuthButton from '@/components/AuthButton'
+import SideMenu from '@/components/SideMenu'
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -28,24 +30,20 @@ export default async function RootLayout({
   return (
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
-        {session ? (
-          <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-            <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-              <span>
-                <a href="/account">{username}</a>
-              </span>
-              <button>
-                <a href="/projects">Projects</a>
-              </button>
-              <form action="/auth/signout" method="post">
-                <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover" type="submit">
-                  Sign out
-                </button>
-              </form>
 
-            </div>
-          </nav>
-        ) : null}
+        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 shadow-md ">
+          <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
+            <SideMenu />
+
+            <>
+              {session && (<span>
+                Hello,<a href="/account" className='font-extrabold'> {username}</a> !
+              </span>)}
+              <AuthButton />
+            </>
+
+          </div>
+        </nav>
         <main className="min-h-screen flex flex-col items-center">
           {children}
         </main>

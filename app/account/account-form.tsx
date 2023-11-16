@@ -78,8 +78,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
   }
 
   return (
-    <div className="flex-1 flex flex-col w-full py-8 px-8 sm:max-w-md justify-start gap-2">
-      <div className="form-widget space-y-5 animate-in flex-1 flex flex-col w-full justify-start gap-2 ">
+    <div className="flex-1 flex flex-col w-2/4 justify-start gap-2 mt-5">
+      <div className="form-widget space-y-5 animate-in flex flex-col w-full justify-start gap-2 shadow-lg p-10 bg-[#fffffe]">
         <div>
           <Input
             label="Email"
@@ -113,7 +113,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
             label="Website"
             id="website"
             type="url"
-            value={username || ''}
+            value={website || ''}
             onChange={(e) => setWebsite(e.target.value)}
           />
         </div>
