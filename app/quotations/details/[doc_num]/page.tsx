@@ -27,7 +27,6 @@ export default async function Quotation({ params }: {
   }
 }) {
   const supabase = createServerComponentClient<Database>({ cookies })
-  const { data: { session } } = await supabase.auth.getSession();
 
   // Select quotation by doc_num
   // quotation also has a relation with customer
@@ -46,9 +45,7 @@ export default async function Quotation({ params }: {
 
   console.log(quotation)
   console.log(error)
-  if (!session) {
-    redirect('/login');
-  }
+
   return (
     <div className="w-3/4 shadow-lg bg-[10 14% 95%]">
       <div className="flex justify-end items-end">

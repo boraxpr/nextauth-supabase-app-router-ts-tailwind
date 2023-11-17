@@ -3,7 +3,6 @@
 
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { Database } from '@/types/supabase';
 import Link from 'next/link';
 export const metadata = {
@@ -12,10 +11,7 @@ export const metadata = {
 
 export default async function Quotations() {
   const supabase = createServerComponentClient<Database>({ cookies })
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) {
-    redirect('/login');
-  }
+
   let { data: quotations, error, status } = await supabase.from("quotations")
     .select(`
   doc_num,

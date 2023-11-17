@@ -1,6 +1,5 @@
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
-
 import type { NextRequest } from 'next/server'
 
 export async function middleware(req: NextRequest) {
@@ -25,5 +24,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/account'],
+  matcher: ['/account', '/quotations', '/quotations/details/[doc_num]', '/quotations/create', '/projects'],
 }
