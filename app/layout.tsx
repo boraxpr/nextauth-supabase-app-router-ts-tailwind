@@ -31,17 +31,22 @@ export default async function RootLayout({
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
 
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 shadow-md ">
-          <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
+        <nav className="w-full grid grid-cols-3 border-b border-b-foreground/10 h-16 shadow-md ">
+          <div className="flex justify-start m-2">
             <SideMenu />
+          </div>
+          <div className="w-full max-w-4xl flex justify-center items-center p-3 text-sm">
 
             <>
               {session && (<span>
                 Hello,<a href="/account" className='font-extrabold'> {username}</a> !
               </span>)}
-              <AuthButton />
+
             </>
 
+          </div>
+          <div className='m-2'>
+            <AuthButton />
           </div>
         </nav>
         <main className="min-h-screen flex flex-col items-center">

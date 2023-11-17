@@ -4,7 +4,8 @@
 
 @layer base {
   :root {
-    --background: 225 14% 95%;
+    --background: 60 100% 99.8%;
+    --card-background: 10 14% 95%;
     --btn-background: 25, 100%, 62%;
     --btn-background-hover:25, 100%, 70%;
     --foreground: 200 50% 3%;
@@ -23,6 +24,12 @@
 @layer base {
   * {
     @apply border-foreground/20;
+  }
+  button {
+    @apply bg-btn-background hover:bg-btn-background-hover;
+  }
+  card{
+    background-color: (var(--card-background));
   }
 }
 

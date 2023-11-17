@@ -4,6 +4,7 @@ import { Database } from '@/types/supabase'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Input from '@/components/Input'
 import { redirect } from 'next/navigation'
+import Button from '@/components/Button'
 export default function AccountForm({ session }: { session: Session | null }) {
   const supabase = createClientComponentClient<Database>()
   const [loading, setLoading] = useState(true)
@@ -119,7 +120,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
         </div>
         <div>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto block w-1/2"
+            className="text-white font-bold py-2 px-4 rounded mx-auto block w-1/2"
             onClick={() => updateProfile({ fullname, username, website, avatar_url })}
             disabled={loading}
           >

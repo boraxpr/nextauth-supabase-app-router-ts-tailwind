@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 export default function SideMenu() {
   const pathname = usePathname();
   const initialMenuState = pathname === '/quotations' || pathname === '/projects';
@@ -9,7 +10,7 @@ export default function SideMenu() {
 
   return (
     <div>
-      <button onClick={() => setIsMenuOpen(!isMenuOpen)} className='bg-[#ff8e3c] p-2 px-5 border rounded-lg'>
+      <button onClick={() => setIsMenuOpen(!isMenuOpen)} className='bg-[#ff8e3c] p-2 px-24 border rounded-lg'>
         ☰
       </button>
       {isMenuOpen && (
@@ -18,12 +19,16 @@ export default function SideMenu() {
             Close
           </button>
 
-          <button className={`text-xl py-5 ${pathname === '/quotations' ? 'bg-neutral-100 border' : ''}`}>
-            <a href="/quotations" className={`font-extrabold`}>Quotations</a>
-          </button >
-          <button className={`text-xl py-5 ${pathname === '/projects' ? 'bg-neutral-100 border' : ''}`}>
-            <a href="/projects" className={`font-extrabold`}>Projects</a>
-          </button>
+          <Link href="/quotations" className={`text-xl py-5 block ${pathname === '/quotations' ? 'bg-neutral-100 border' : ''} font-extrabold text-center`}>
+
+            Quotations
+
+          </Link>
+          <Link href="/projects" className={`text-xl py-5 block ${pathname === '/projects' ? 'bg-neutral-100 border' : ''} font-extrabold text-center`}>
+
+            Projects
+
+          </Link>
 
         </aside>
       )}
