@@ -50,9 +50,8 @@ export default function Login({
         </svg>{' '}
         Back
       </Link>
-
       <form
-        className="animate-in flex flex-col w-full justify-start gap-2 text-foreground"
+        className="animate-in flex flex-col w-full justify-start gap-2 text-foreground border p-5 shadow-lg"
         action={signIn}
       >
         <LoginSignupTabs />
@@ -75,7 +74,7 @@ export default function Login({
           placeholder="••••••••"
           required
         />
-        <button className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
+        <button className="rounded-lg px-4 py-2 text-foreground mb-2">
           Sign In
         </button>
         {searchParams?.message && (

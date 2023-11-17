@@ -1,6 +1,6 @@
 // List of Projects
+// Path: app/projects/page.tsx
 
-import Button from '@/components/Button';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -16,7 +16,8 @@ export default async function Quotations() {
   if (!session) {
     redirect('/login');
   }
-  const { data: quotations, error, status } = await supabase.from("quotations").select(`
+  let { data: quotations, error, status } = await supabase.from("quotations")
+    .select(`
   doc_num,
   created_date,
   status,
@@ -24,7 +25,7 @@ export default async function Quotations() {
   project_name,
   grand_total,
   customers(id, name)`
-  );
+    );
   // get each quotation's customer name
 
   // async function openQuotation() {
@@ -47,7 +48,7 @@ export default async function Quotations() {
         </div>
         <div className='bg-white text-black'>
 
-          {quotations?.map((quotation) => (
+          {(quotations ? (quotations?.map((quotation) => (
             <div key={quotation.doc_num} className="grid grid-cols-5 p-4 overflow-auto">
               <div className=" p-2 text-center">{quotation.created_date}</div>
               <div className=" p-2 text-center">{quotation.doc_num}</div>
@@ -75,8 +76,9 @@ export default async function Quotations() {
                 </div>
               </div>
             </div>
-          ))}
-
+          ))) :
+            <div className="grid grid-cols-5 p-4 overflow-auto"></div>)
+          }
         </div>
       </div>
     </div>

@@ -28,10 +28,13 @@ export default async function Quotation({ params }: {
 }) {
   const supabase = createServerComponentClient<Database>({ cookies })
   const { data: { session } } = await supabase.auth.getSession();
+
   // Select quotation by doc_num
   // quotation also has a relation with customer
   // so we can use Query to get customer name (Serverless API automatically handles this)
-  const { data: quotation, error, status } = await supabase.from("quotations").select(`
+
+  const { data: quotation, error, status } = await supabase.from("quotations")
+    .select(`
   doc_num,
   created_date,
   status,
@@ -70,28 +73,33 @@ export default async function Quotation({ params }: {
           </svg>{' '}
           Close
         </Link>
-
       </div>
-      {(quotation ? <div className="grid grid-rows-4 p-2 overflow-auto ">
-        <div className=" p-2 text-center">{quotation?.doc_num}</div>
-        <div className=" p-2 text-center">
-          {quotation?.customers ? (quotation?.customers?.name) : ""}
-        </div>
-        <div className=" p-2 text-center">
-          {quotation?.project_name}
-        </div>
-        <div className=" p-2 text-center">
-          {quotation?.currency && (new Intl.NumberFormat('en-US', { style: 'currency', currency: quotation?.currency }).format(quotation.grand_total!))}
-        </div>
-        <div className=" p-2 text-center">
-
-          <div>
-            {quotation?.status}
-          </div>
-
-        </div>
-      </div> : <div className="text-center p-16">Quotation not found</div>)}
+      {
+        (
+          quotation ?
+            <div className="grid grid-rows-4 p-2 overflow-auto ">
+              <div className=" p-2 text-center">{quotation?.doc_num}</div>
+              <div className=" p-2 text-center">
+                {(quotation.customers ? (quotation?.customers?.name) : "")}
+              </div>
+              <div className=" p-2 text-center">
+                {quotation?.project_name}
+              </div>
+              <div className=" p-2 text-center">
+                {quotation?.currency && (new Intl.NumberFormat('en-US', { style: 'currency', currency: quotation?.currency }).format(quotation.grand_total!))}
+              </div>
+              <div className=" p-2 text-center">
+                <div>
+                  {quotation?.status}
+                </div>
+              </div>
+            </div>
+            :
+            <div className="text-center p-16">Quotation not found</div>
+        )
+      }
     </div>
   );
 }
 
+{/* <QuotationDetailscard quotation={quotation} /> */ }

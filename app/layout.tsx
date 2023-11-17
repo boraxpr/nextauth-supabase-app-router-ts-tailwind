@@ -33,7 +33,7 @@ export default async function RootLayout({
 
         <nav className="w-full grid grid-cols-3 border-b border-b-foreground/10 h-16 shadow-md ">
           <div className="flex justify-start m-2">
-            <SideMenu />
+            {session && (<SideMenu />)}
           </div>
           <div className="w-full max-w-4xl flex justify-center items-center p-3 text-sm">
 
