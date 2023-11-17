@@ -77,69 +77,6 @@ export interface Database {
           }
         ]
       }
-      project: {
-        Row: {
-          detail: string | null
-          price: number | null
-          project_name: string
-        }
-        Insert: {
-          detail?: string | null
-          price?: number | null
-          project_name: string
-        }
-        Update: {
-          detail?: string | null
-          price?: number | null
-          project_name?: string
-        }
-        Relationships: []
-      }
-      quotations: {
-        Row: {
-          created_date: string
-          currency: string | null
-          customer_id: string | null
-          doc_num: string
-          grand_total: number | null
-          project_name: string | null
-          status: string | null
-        }
-        Insert: {
-          created_date: string
-          currency?: string | null
-          customer_id?: string | null
-          doc_num: string
-          grand_total?: number | null
-          project_name?: string | null
-          status?: string | null
-        }
-        Update: {
-          created_date?: string
-          currency?: string | null
-          customer_id?: string | null
-          doc_num?: string
-          grand_total?: number | null
-          project_name?: string | null
-          status?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "quotations_customer_id_fkey"
-            columns: ["customer_id"]
-            isOneToOne: false
-            referencedRelation: "customers"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "quotations_project_name_fkey"
-            columns: ["project_name"]
-            isOneToOne: false
-            referencedRelation: "project"
-            referencedColumns: ["project_name"]
-          }
-        ]
-      }
     }
     Views: {
       [_ in never]: never
