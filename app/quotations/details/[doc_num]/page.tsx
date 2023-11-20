@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { cookies } from 'next/headers'
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import QuotationDetailsCard from "../../QuotationDetailsCard";
 
 export function generateMetadata({ params }: {
   params: {
@@ -74,23 +75,7 @@ export default async function Quotation({ params }: {
       {
         (
           quotation ?
-            <div className="grid grid-rows-4 p-2 overflow-auto ">
-              <div className=" p-2 text-center">{quotation?.doc_num}</div>
-              <div className=" p-2 text-center">
-                {(quotation.customers ? (quotation?.customers?.name) : "")}
-              </div>
-              <div className=" p-2 text-center">
-                {quotation?.project_name}
-              </div>
-              <div className=" p-2 text-center">
-                {quotation?.currency && (new Intl.NumberFormat('en-US', { style: 'currency', currency: quotation?.currency }).format(quotation.grand_total!))}
-              </div>
-              <div className=" p-2 text-center">
-                <div>
-                  {quotation?.status}
-                </div>
-              </div>
-            </div>
+            <QuotationDetailsCard quotation={quotation} />
             :
             <div className="text-center p-16">Quotation not found</div>
         )
