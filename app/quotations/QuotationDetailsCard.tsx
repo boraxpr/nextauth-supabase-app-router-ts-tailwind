@@ -3,7 +3,8 @@ import ReactToPrint, { PrintContextConsumer } from 'react-to-print';
 import { useRef } from 'react';
 
 export default function QuotationDetailsCard({ quotation }: { quotation: any }) {
-  const componentRef = useRef<HTMLInputElement>(null);
+  // For typescript, we need to specify the type of the ref
+  const componentRef = useRef(null);
   return (
     <div>
       <div className='flex flex-col items-end px-5'>
