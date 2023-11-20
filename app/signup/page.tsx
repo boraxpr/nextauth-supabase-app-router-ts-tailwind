@@ -8,25 +8,6 @@ export default function Login({
 }: {
   searchParams: { message: string }
 }) {
-  const signIn = async (formData: FormData) => {
-    'use server'
-
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-
-    if (error) {
-      return redirect('/login?message=Could not authenticate user')
-    }
-
-    return redirect('/')
-  }
 
   const signUp = async (formData: FormData) => {
     'use server'
@@ -76,7 +57,7 @@ export default function Login({
       </Link>
       <form
         className="animate-in flex flex-col w-full justify-start gap-2 text-foreground border rounded-lg shadow-lg p-5"
-        action={signIn}
+        action={signUp}
       >
         <LoginSignupTabs />
         <label className="text-md" htmlFor="email">
@@ -101,7 +82,7 @@ export default function Login({
 
         <button
           formAction={signUp}
-          className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
+          className="border border-foreground/20 rounded-md px-4 py-2 mb-2 bg-primary text-primary-foreground"
         >
           Sign Up
         </button>

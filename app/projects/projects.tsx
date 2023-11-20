@@ -1,52 +1,9 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog"
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { createClient } from "@/utils/supabase/client";
-import { redirect } from "next/navigation";
-import Link from "next/link";
 
-export const metadata = {
-  title: 'Projects',
-}
-
-
-export default async function Page(
-  { searchParams }: { searchParams: { message: string, project_name: string } }
-) {
-  const supabase = createClient()
-  const { data: projects } = await supabase.from("project").select();
-  const saveChanges = async (formData: FormData) => {
-    "use server"
-    const supabase = createClient()
-    const name = formData.get('projectName') as string
-    const details = formData.get('projectDetail') as string
-    console.log(name, details)
-    const { error } = await supabase
-      .from('project')
-      .update({ project_name: name, detail: details })
-      .eq('project_name', searchParams.project_name)
-    console.log(error)
-    if (error) {
-      return redirect('/projects?message=Could not update project')
-    }
-    return redirect('/projects')
-  }
+export default async function Projects({ searchParams }: { searchParams: { message: string } }) {
 
   return (
     <div className="">
       {projects!.map((project, index) => (
-
         <div
           key={index}
           className="p-4 bg-[#fffffe] rounded-md my-2 shadow-lg motion-safe:animate-slide_in overflow-hidden"
@@ -59,9 +16,7 @@ export default async function Page(
           </p>
           <Dialog>
             <DialogTrigger asChild>
-              <Link href={`/projects?project_name=${project.project_name}`}>
-                <Button variant="outline">Edit</Button>
-              </Link>
+              <Button variant="outline">Edit</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
@@ -85,25 +40,13 @@ export default async function Page(
                     <Textarea id="projectDetail" name="projectDetail" defaultValue={project.detail} className="col-span-3"></Textarea>
                   </div>
                 </div>
-                <div className="flex justify-end">
-                  <DialogClose asChild><Button type="submit">Save changes</Button></DialogClose>
-                </div>
+                <Button>Save changes</Button>
               </form>
-              <DialogFooter>
-                {searchParams?.message && (
-                  <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-                    {searchParams.message}
-                  </p>
-                )}
-              </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>
       ))}
+
     </div>
-
-
   );
 }
-
-

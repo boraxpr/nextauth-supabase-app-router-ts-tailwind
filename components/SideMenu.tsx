@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { Button } from './ui/button';
 export default function SideMenu() {
   const pathname = usePathname();
   const initialMenuState = pathname === '/quotations' || pathname === '/projects';
@@ -19,12 +20,12 @@ export default function SideMenu() {
             Close
           </button>
 
-          <Link href="/quotations" className={`text-xl py-5 block ${pathname === '/quotations' ? 'bg-neutral-100 border' : ''} font-extrabold text-center`}>
+          <Link href="/quotations" className={`text-xl py-5 block  ${pathname === '/quotations' ? 'bg-neutral-100 border' : 'bg-primary text-primary-foreground'} font-extrabold text-center`}>
 
             Quotations
 
           </Link>
-          <Link href="/projects" className={`text-xl py-5 block ${pathname === '/projects' ? 'bg-neutral-100 border' : ''} font-extrabold text-center`}>
+          <Link href="/projects" className={`text-xl py-5 block  ${pathname === '/projects' ? 'bg-neutral-100 border' : 'bg-primary text-primary-foreground'} font-extrabold text-center`}>
 
             Projects
 

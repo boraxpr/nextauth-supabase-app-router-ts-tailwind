@@ -3,6 +3,7 @@ import { headers, cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import LoginSignupTabs from '@/components/LoginSignupTabs'
+import { Button } from '@/components/ui/button'
 export default function Login({
   searchParams,
 }: {
@@ -13,6 +14,7 @@ export default function Login({
 
     const email = formData.get('email') as string
     const password = formData.get('password') as string
+    console.log(email, password)
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
@@ -74,9 +76,9 @@ export default function Login({
           placeholder="••••••••"
           required
         />
-        <button className="rounded-lg px-4 py-2 text-foreground mb-2">
+        <Button className="rounded-lg px-4 py-2 mb-2 text-primary-foreground">
           Sign In
-        </button>
+        </Button>
         {searchParams?.message && (
           <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
             {searchParams.message}

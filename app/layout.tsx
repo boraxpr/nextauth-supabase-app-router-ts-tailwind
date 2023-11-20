@@ -6,6 +6,9 @@ import AuthButton from "@/components/AuthButton";
 import SideMenu from "@/components/SideMenu";
 import { cn } from "@/lib/utils";
 import { Inter as FontSans } from "next/font/google";
+import Link from "next/link";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
@@ -31,6 +34,14 @@ export default async function RootLayout({
     data: { session },
   } = await supabase.auth.getSession();
   const username = session?.user?.email?.split("@")[0];
+  const signOut = async () => {
+    'use server'
+
+    const cookieStore = cookies()
+    const supabase = createClient(cookieStore)
+    await supabase.auth.signOut()
+    return redirect('/login')
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -59,7 +70,22 @@ export default async function RootLayout({
             </>
           </div>
           <div className="m-2">
-            <AuthButton />
+            {session ? (
+              <div className="flex items-center justify-end gap-4">
+                <form action={signOut}>
+                  <button className="py-2 px-24 rounded-md no-underline border bg-primary text-primary-foreground">
+                    Signout
+                  </button>
+                </form>
+              </div>) : (<div className="flex items-center justify-end gap-4">
+                <Link
+                  href="/login"
+                  className="py-2 px-24 rounded-md no-underline bg-primary text-primary-foreground"
+                >
+                  Login
+                </Link>
+              </div >)
+            }
           </div>
         </nav>
         <main className="min-h-screen flex flex-col items-center">
