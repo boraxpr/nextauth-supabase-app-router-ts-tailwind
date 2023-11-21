@@ -11,16 +11,34 @@ export interface Database {
     Tables: {
       customers: {
         Row: {
+          address: string
+          branch_code: string
+          branch_name: string
           id: string
+          is_branch: boolean
           name: string | null
+          tax_id: string
+          zipcode: string
         }
         Insert: {
+          address: string
+          branch_code?: string
+          branch_name?: string
           id?: string
+          is_branch?: boolean
           name?: string | null
+          tax_id: string
+          zipcode: string
         }
         Update: {
+          address?: string
+          branch_code?: string
+          branch_name?: string
           id?: string
+          is_branch?: boolean
           name?: string | null
+          tax_id?: string
+          zipcode?: string
         }
         Relationships: []
       }
