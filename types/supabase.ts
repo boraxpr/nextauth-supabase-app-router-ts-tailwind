@@ -42,24 +42,6 @@ export interface Database {
         }
         Relationships: []
       }
-      notes: {
-        Row: {
-          id: number
-          price: number | null
-          title: string | null
-        }
-        Insert: {
-          id?: number
-          price?: number | null
-          title?: string | null
-        }
-        Update: {
-          id?: number
-          price?: number | null
-          title?: string | null
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
           avatar_url: string | null
