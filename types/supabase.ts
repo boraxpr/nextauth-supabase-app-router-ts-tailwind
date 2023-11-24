@@ -97,28 +97,31 @@ export interface Database {
       }
       quotations: {
         Row: {
-          created_date: string
+          created_date: string | null
           currency: string | null
           customer_id: string | null
           doc_num: string
+          due_date: string | null
           grand_total: number | null
           project_name: string | null
           status: string | null
         }
         Insert: {
-          created_date: string
+          created_date?: string | null
           currency?: string | null
           customer_id?: string | null
           doc_num: string
+          due_date?: string | null
           grand_total?: number | null
           project_name?: string | null
           status?: string | null
         }
         Update: {
-          created_date?: string
+          created_date?: string | null
           currency?: string | null
           customer_id?: string | null
           doc_num?: string
+          due_date?: string | null
           grand_total?: number | null
           project_name?: string | null
           status?: string | null
