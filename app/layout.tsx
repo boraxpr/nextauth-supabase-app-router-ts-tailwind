@@ -8,6 +8,7 @@ import { Inter as FontSans } from "next/font/google";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { ScrollToTopButton } from "@/components/scrollToTop";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -19,10 +20,6 @@ export const metadata = {
   description: "The fastest way to build apps with Next.js and Supabase",
 };
 
-export const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
 
 export default async function RootLayout({
   children,
@@ -88,6 +85,7 @@ export default async function RootLayout({
         <main className="min-h-screen flex flex-col items-center">
           {children}
         </main>
+        <ScrollToTopButton />
       </body>
     </html>
   );

@@ -9,7 +9,7 @@ import { getQuotationForDetailsForm } from "@/server_actions/get"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Database } from "@/types/supabase"
 import { Customers, Projects } from "../page.d"
-import { DatePicker } from '@mui/x-date-pickers';
+import { DatePicker, DateValidationError, PickerChangeHandlerContext } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from "dayjs"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -17,12 +17,12 @@ export default function Form(
   { doc_num, customers, projects }: { doc_num: string, customers: Customers[], projects: Projects[] }
 ) {
   const supabase = createClientComponentClient<Database>()
-  const [grandTotal, setGrandTotal] = useState<Number | null>()
+  const [grandTotal, setGrandTotal] = useState<string | number | null>(null)
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>('')
   const [selectedCustomer, setSelectedCustomer] = useState('')
   const [selectedProject, setSelectedProject] = useState<string | null>("")
-  const [dueDate, setDueDate] = useState<Dayjs | null>()
-  const [date, setDate] = useState<Dayjs | null>()
+  const [dueDate, setDueDate] = useState<Dayjs | null>(dayjs(new Date()).add(7, "days"))
+  const [date, setDate] = useState<Dayjs | null>(dayjs(new Date()))
   const pathname = usePathname()
   const [loading, setLoading] = useState<boolean>((pathname.includes('details')))
   const router = useRouter();
@@ -87,23 +87,36 @@ export default function Form(
           currency,
           customer_id,
           doc_num: docNum,
-          due_date,
+          due_date: dayjs(due_date).toISOString(),
           grand_total,
           project_name,
           status: "Draft",
         })
+        console.info(docNum,
+          project_name,
+          grand_total,
+          currency,
+          customer_id,
+          due_date,
+          status)
         if (error) throw error
       }
       if (pathname.includes('/details/')) {
         const { error } = await supabase.from('quotations').update({
           currency,
           customer_id,
-          due_date,
+          due_date: dayjs(due_date).toISOString(),
           grand_total,
           project_name,
           status
         }).eq('doc_num', docNum)
-        console.log("UPDATEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+        console.info(docNum,
+          project_name,
+          grand_total,
+          currency,
+          customer_id,
+          due_date,
+          status)
         if (error) {
           console.error(error)
           throw error
@@ -111,6 +124,7 @@ export default function Form(
       }
     } catch (error) {
       alert('Error Updating Data')
+      throw error
     } finally {
       setLoading(false)
     }
@@ -121,7 +135,7 @@ export default function Form(
   }
 
   function handleGrandTotalChange(event: ChangeEvent<HTMLInputElement>): void {
-    setGrandTotal(event.target.value)
+    setGrandTotal(Number(event.target.value))
   }
 
   function handleCurrencyChange(event: ChangeEvent<HTMLSelectElement>): void {
@@ -129,6 +143,11 @@ export default function Form(
   }
   function handleSelectedCustomerChange(event: ChangeEvent<HTMLSelectElement>): void {
     setSelectedCustomer(event.target.value)
+  }
+
+  function handleDueDateChange(value: Dayjs | null, context: PickerChangeHandlerContext<DateValidationError>): void {
+    setDueDate(value)
+    console.log(value)
   }
 
   return (
@@ -158,7 +177,7 @@ export default function Form(
                   grand_total: Number(grandTotal),
                   currency: selectedCurrency,
                   customer_id: selectedCustomer,
-                  due_date: dayjs(dueDate).toISOString()
+                  due_date: dayjs(dueDate).toString()
                 }).then(() => router.push("/quotations"))}
                 className="py-2 px-20 rounded-full border-green-500 text-green-500 hover:text-green-500 " disabled={loading}>
                 Save
@@ -196,29 +215,29 @@ export default function Form(
                 <div className="mb-4 space-y-2">
                   <div className="mb-4 ">
                     <Label htmlFor="grand_total" className="block text-lg ">Grand Total(v1):</Label>
-                    <Input type="number" id="grand_total" name="grand_total" className="mt-1 p-2 w-full border rounded-md" value={grandTotal} onChange={handleGrandTotalChange} required />
+                    <Input type="number" id="grand_total" name="grand_total" className="mt-1 p-2 w-full border rounded-md" value={grandTotal === null ? '' : grandTotal} onChange={handleGrandTotalChange} required />
                   </div>
 
                   {(pathname == "/quotations/create") && (
                     <div>
                       {/* <Label htmlFor="date" className="block text-sm ">Date:</Label> */}
-                      <DatePicker label="date" format="DD-MMM-YYYY" value={dayjs(new Date())} disabled />
+                      <DatePicker label="Created Date" format="DD-MMM-YYYY" value={dayjs(new Date())} disabled />
                     </div>
                   )}
                   {(pathname.includes("/quotations/details")) && (
                     <div>
                       {/* <Label htmlFor="date" className="block text-sm ">Date:</Label> */}
-                      <DatePicker label="date" format="DD-MMM-YYYY" value={dayjs(new Date())} disabled />
+                      <DatePicker label="date" format="DD-MMM-YYYY" value={dayjs(date)} disabled />
                     </div>
                   )}
 
                   <Input type="text" placeholder="Credit (Day):"></Input>
 
                   {/* <Label htmlFor="" className="block text-sm ">Due Date:</Label> */}
-                  <DatePicker label="Due Date" format="DD-MMM-YYYY" value={dueDate} onChange={(e) => setDueDate(e)} />
+                  <DatePicker label="Due Date" format="DD-MMM-YYYY" value={dayjs(dueDate)} minDate={dayjs(new Date()).add(1, "days")} onChange={handleDueDateChange} />
                   <Input type="text" placeholder="Sales Name:"></Input>
                   <div className="mb-4">
-                    <select id="currency" name="currency" className="mt-1 p-2 w-full border rounded-md" value={selectedCurrency} onChange={handleCurrencyChange}>
+                    <select id="currency" name="currency" className="mt-1 p-2 w-full border rounded-md" value={selectedCurrency === null ? '' : selectedCurrency} onChange={handleCurrencyChange}>
                       <option value="">Currency:</option>
                       <option value="usd">USD - United States Dollar</option>
                       <option value="eur">EUR - Euro</option>
@@ -237,7 +256,7 @@ export default function Form(
               <div className="mb-4 w-9/12">
                 <div className="flex flex-row space-x-1 items-center">
                   <Label htmlFor="project_name" className="block text-sm font-medium text-gray-600 required:" >Project:</Label>
-                  {<select id="project_name" name="project_name" className="mt-1 p-2 w-full border rounded-md" value={selectedProject} onChange={handleSelectedProjectChange} required>
+                  {<select id="project_name" name="project_name" className="mt-1 p-2 w-full border rounded-md" value={selectedProject === null ? '' : selectedProject} onChange={handleSelectedProjectChange} required>
                     {projects && projects.length > 0 ? (
                       <>
                         <option value="">Select a project</option>
