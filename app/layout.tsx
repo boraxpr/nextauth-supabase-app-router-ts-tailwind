@@ -2,13 +2,13 @@ import "./globals.css";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/types/supabase";
-import AuthButton from "@/components/AuthButton";
 import SideMenu from "@/components/SideMenu";
 import { cn } from "@/lib/utils";
 import { Inter as FontSans } from "next/font/google";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
@@ -51,40 +51,37 @@ export default async function RootLayout({
           fontSans.variable
         )}
       >
-        <nav className="w-full grid grid-cols-3 border-b border-b-foreground/10 h-16 shadow-md ">
-          <div className="flex justify-start m-2">
+        <nav className="w-full grid grid-cols-3 border-b border-b-foreground/10 h-16 shadow-md">
+          <div className="m-2 w-2/4">
             {session && <SideMenu />}
           </div>
-          <div className="w-full max-w-4xl flex justify-center items-center p-3 text-sm">
-            <>
-              {session && (
-                <span>
-                  Hello,
-                  <a href="/account" className="font-extrabold">
-                    {" "}
-                    {username}
-                  </a>{" "}
-                  !
-                </span>
-              )}
-            </>
+          <div className="m-2 text-sm flex flex-row justify-center items-center overflow-hidden">
+            {session && (
+              <span>
+                Hello,
+                <a href="/account" className="font-extrabold ">
+                  {" "}
+                  {username}
+                </a>{" "}
+                !
+              </span>
+            )}
           </div>
-          <div className="m-2">
+          <div className="flex flex-row justify-end m-2">
             {session ? (
-              <div className="flex items-center justify-end gap-4">
-                <form action={signOut}>
-                  <button className="py-2 px-24 rounded-md no-underline border bg-primary text-primary-foreground">
-                    Signout
-                  </button>
-                </form>
-              </div>) : (<div className="flex items-center justify-end gap-4">
-                <Link
-                  href="/login"
-                  className="py-2 px-24 rounded-md no-underline bg-primary text-primary-foreground"
-                >
-                  Login
-                </Link>
-              </div >)
+              <form action={signOut}>
+                <button className="rounded-md no-underline border bg-primary text-primary-foreground p-2">
+                  Signout
+                </button>
+              </form>
+            ) : (
+              <Link
+                href="/login"
+                className="p-2 rounded-md no-underline bg-primary border text-primary-foreground "
+              >
+                Login
+              </Link>
+            )
             }
           </div>
         </nav>

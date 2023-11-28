@@ -13,40 +13,32 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { createClient } from "@/utils/supabase/client";
-import { redirect } from "next/navigation";
 import Link from "next/link";
+import { saveProjectChanges } from "@/server_actions/update";
 
 export const metadata = {
   title: 'Projects',
 }
-
-
 export default async function Page(
   { searchParams }: { searchParams: { message: string, project_name: string } }
 ) {
   const supabase = createClient()
+  // Get projects list
   const { data: projects } = await supabase.from("project").select();
-  const saveChanges = async (formData: FormData) => {
-    "use server"
-    const supabase = createClient()
-    const name = formData.get('projectName') as string
-    const details = formData.get('projectDetail') as string
-    console.log(name, details)
-    const { error } = await supabase
-      .from('project')
-      .update({ project_name: name, detail: details })
-      .eq('project_name', searchParams.project_name)
-    console.log(error)
-    if (error) {
-      return redirect('/projects?message=Could not update project')
-    }
-    return redirect('/projects')
-  }
+  // Binding to Edit Server Action
+  const saveChangesWithProjectName = saveProjectChanges.bind(null, searchParams.project_name)
+
 
   return (
-    <div className="">
+    <div className="lg:w-3/5 sm:w-4/5">
+      <div>
+        {searchParams?.message && (
+          <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+            {searchParams.message}
+          </p>
+        )}
+      </div>
       {projects!.map((project, index) => (
-
         <div
           key={index}
           className="p-4 bg-[#fffffe] rounded-md my-2 shadow-lg motion-safe:animate-slide_in overflow-hidden"
@@ -70,7 +62,7 @@ export default async function Page(
                   Make changes to your project here. Click save when you're done.
                 </DialogDescription>
               </DialogHeader>
-              <form action={saveChanges}>
+              <form action={saveChangesWithProjectName}>
                 <div className="grid gap-4 py-4">
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="projectName" className="text-right">

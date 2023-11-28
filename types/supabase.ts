@@ -11,34 +11,34 @@ export interface Database {
     Tables: {
       customers: {
         Row: {
+          address: string
+          branch_code: string
+          branch_name: string
           id: string
+          is_branch: boolean
           name: string | null
+          tax_id: string
+          zipcode: string
         }
         Insert: {
+          address: string
+          branch_code?: string
+          branch_name?: string
           id?: string
+          is_branch?: boolean
           name?: string | null
+          tax_id: string
+          zipcode: string
         }
         Update: {
+          address?: string
+          branch_code?: string
+          branch_name?: string
           id?: string
+          is_branch?: boolean
           name?: string | null
-        }
-        Relationships: []
-      }
-      notes: {
-        Row: {
-          id: number
-          price: number | null
-          title: string | null
-        }
-        Insert: {
-          id?: number
-          price?: number | null
-          title?: string | null
-        }
-        Update: {
-          id?: number
-          price?: number | null
-          title?: string | null
+          tax_id?: string
+          zipcode?: string
         }
         Relationships: []
       }
@@ -97,28 +97,31 @@ export interface Database {
       }
       quotations: {
         Row: {
-          created_date: string
+          created_date: string | null
           currency: string | null
           customer_id: string | null
           doc_num: string
+          due_date: string | null
           grand_total: number | null
           project_name: string | null
           status: string | null
         }
         Insert: {
-          created_date: string
+          created_date?: string | null
           currency?: string | null
           customer_id?: string | null
           doc_num: string
+          due_date?: string | null
           grand_total?: number | null
           project_name?: string | null
           status?: string | null
         }
         Update: {
-          created_date?: string
+          created_date?: string | null
           currency?: string | null
           customer_id?: string | null
           doc_num?: string
+          due_date?: string | null
           grand_total?: number | null
           project_name?: string | null
           status?: string | null

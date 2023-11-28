@@ -4,6 +4,7 @@ import { Database } from '@/types/supabase'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Input from '@/components/Input'
 import { redirect } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 export default function AccountForm({ session }: { session: Session | null }) {
   const supabase = createClientComponentClient<Database>()
   const [loading, setLoading] = useState(true)
@@ -23,7 +24,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
       const { data, error, status } = await supabase
         .from('profiles')
         .select(`full_name, username, website, avatar_url`)
-        .eq('id', user?.id)
+        .eq('id', user?.id).limit(1)
         .single()
 
       if (error && status !== 406) {
@@ -118,13 +119,13 @@ export default function AccountForm({ session }: { session: Session | null }) {
           />
         </div>
         <div>
-          <button
+          <Button
             className="text-white font-bold py-2 px-4 rounded mx-auto block w-1/2"
             onClick={() => updateProfile({ fullname, username, website, avatar_url })}
             disabled={loading}
           >
             {loading ? 'Loading ...' : 'Update'}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

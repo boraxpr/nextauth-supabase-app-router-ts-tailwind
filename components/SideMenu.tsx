@@ -10,22 +10,22 @@ export default function SideMenu() {
 
 
   return (
-    <div>
-      <button onClick={() => setIsMenuOpen(!isMenuOpen)} className='bg-[#ff8e3c] p-2 px-24 border rounded-lg'>
+    <div className='w-full'>
+      <Button onClick={() => setIsMenuOpen(!isMenuOpen)} className='bg-primary p-2 border rounded-lg w-full'>
         ☰
-      </button>
+      </Button>
       {isMenuOpen && (
         <aside className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 animate-slide_in flex flex-col`}>
           <button onClick={() => setIsMenuOpen(false)} className='py-5'>
             Close
           </button>
 
-          <Link href="/quotations" className={`text-xl py-5 block  ${pathname === '/quotations' ? 'bg-neutral-100 border' : 'bg-primary text-primary-foreground'} font-extrabold text-center`}>
+          <Link href="/quotations" className={`text-xl py-5 block  ${pathname === '/quotations' ? 'ring bg-card z-50 m-4' : 'bg-primary text-primary-foreground'} font-extrabold text-center`}>
 
             Quotations
 
           </Link>
-          <Link href="/projects" className={`text-xl py-5 block  ${pathname === '/projects' ? 'bg-neutral-100 border' : 'bg-primary text-primary-foreground'} font-extrabold text-center`}>
+          <Link href="/projects" className={`text-xl py-5 block  ${pathname === '/projects' ? 'ring bg-card z-50 m-4' : 'bg-primary text-primary-foreground'} font-extrabold text-center`}>
 
             Projects
 
