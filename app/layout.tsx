@@ -4,7 +4,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/types/supabase";
 import SideMenu from "@/components/SideMenu";
 import { cn } from "@/lib/utils";
-import { Inter as FontSans } from "next/font/google";
+import { Inter } from "next/font/google";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -20,10 +20,10 @@ export const metadata = {
   description: "The fastest way to build apps with Next.js and Supabase",
 };
 
-export const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default async function RootLayout({
   children,
@@ -48,8 +48,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          `min-h-screen bg-background font-sans antialiased ${inter.className}`
         )}
       >
         <nav className="w-full grid grid-cols-3 border-b border-b-foreground/10 h-16 shadow-md">
