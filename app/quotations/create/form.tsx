@@ -121,7 +121,7 @@ export default function Form(
   }
 
   function handleGrandTotalChange(event: ChangeEvent<HTMLInputElement>): void {
-    setGrandTotal(event.target.value)
+    setGrandTotal(Number(event.target.value))
   }
 
   function handleCurrencyChange(event: ChangeEvent<HTMLSelectElement>): void {
