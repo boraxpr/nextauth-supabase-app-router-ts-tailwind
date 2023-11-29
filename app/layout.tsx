@@ -1,22 +1,18 @@
 import "./globals.css";
-
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
-
 import { ScrollToTopButton } from "@/components/scrollToTop";
 import { ReactNode } from "react";
 import NavBar from "@/components/NavBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Providers from "@/components/Providers";
-
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+import { baseUrl } from "@/utils/server";
 
 export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: "RD",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  metadataBase: new URL(baseUrl),
+  title: "Sphere Accounts",
+  description:
+    "Sphere Accounts is a simple accounts app built with Next.js and Supabase.",
 };
 
 const inter = Inter({

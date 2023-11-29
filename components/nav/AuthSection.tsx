@@ -37,7 +37,7 @@ export default function AuthSection(props: Props) {
           Sign In
         </Link>
         <Link
-          href="/auth/signout"
+          href="/auth/signup"
           className={cn(
             buttonVariants({
               variant: "secondary",
