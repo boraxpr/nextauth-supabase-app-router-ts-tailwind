@@ -5,18 +5,23 @@ import {
 import { ZodError } from "zod";
 
 export const createServerActionValidationError = (
-  error: ZodError
+  errors: ZodError | Array<{ field: string; message: string }>
 ): ServerActionErrorValidationResult => ({
   status: "error",
   type: "validation",
-  errors: error.issues.map((issue) => ({
-    field: issue.path.join("."),
-    message: issue.message,
-  })),
+  errors:
+    errors instanceof ZodError
+      ? errors.issues.map((issue) => ({
+          field: issue.path.join("."),
+          message: issue.message,
+        }))
+      : errors,
 });
 
-export const createServerActionAuthError = (): ServerActionErrorAuthResult => ({
+export const createServerActionAuthError = (
+  message: string
+): ServerActionErrorAuthResult => ({
   status: "error",
   type: "auth",
-  message: "Invalid email or password",
+  message: message,
 });

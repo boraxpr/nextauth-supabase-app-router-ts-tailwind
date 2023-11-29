@@ -23,28 +23,26 @@ import Link from "next/link";
 import { ServerActionResult } from "@/types/server";
 import { handleFormServerActionError } from "@/utils/client/actions";
 import { useRouter } from "next/navigation";
-import { SignInSchema } from "@/server/schemas/auth";
+import { SignUpSchema } from "@/server/schemas/auth";
 
 interface Props {
-  signInFn: (data: {
-    email: string;
-    password: string;
-  }) => Promise<ServerActionResult>;
+  signUpFn: (data: SignUpSchema) => Promise<ServerActionResult>;
 }
 
-export default function SignInClient(props: Props) {
+export default function SignUpClient(props: Props) {
   const router = useRouter();
-  const form = useForm<SignInSchema>({
+  const form = useForm<SignUpSchema>({
     defaultValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
   const mutation = useMutation({
-    mutationFn: props.signInFn,
+    mutationFn: props.signUpFn,
     onSuccess(data, variables, context) {
-      if (data.status === "success") router.push("/");
+      if (data.status === "success") router.push("/auth/signin");
       else handleFormServerActionError(data, form);
     },
   });
@@ -54,9 +52,9 @@ export default function SignInClient(props: Props) {
         <Form {...form}>
           <form onSubmit={form.handleSubmit((data) => mutation.mutate(data))}>
             <CardHeader>
-              <CardTitle>Sign In</CardTitle>
+              <CardTitle>Sign Up</CardTitle>
               <CardDescription>
-                Sign in to your account to continue
+                Sign up for a new account to continue
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -90,14 +88,31 @@ export default function SignInClient(props: Props) {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="********"
+                        type="password"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </CardContent>
             <CardFooter className="space-x-2">
-              <Button loading={mutation.isPending}>Sign In</Button>
+              <Button loading={mutation.isPending}>Sign Up</Button>
               <Link
-                href="/auth/signup"
+                href="/auth/signin"
                 className={buttonVariants({ variant: "outline" })}
               >
-                Sign Up
+                Sign In
               </Link>
             </CardFooter>
           </form>

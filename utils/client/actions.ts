@@ -12,9 +12,17 @@ export function handleFormServerActionError<T extends FieldValues>(
     });
   }
   if (result.type === "auth") {
-    // @ts-ignore
-    form.setError("email", { message: " " });
-    // @ts-ignore
-    form.setError("password", { message: result.message });
+    if (result.message === "Invalid credentials") {
+      // @ts-ignore
+      form.setError("email", { message: " " });
+      // @ts-ignore
+      form.setError("password", { message: result.message });
+    } else if (result.message === "Email already exists") {
+      // @ts-ignore
+      form.setError("email", { message: result.message });
+    } else {
+      // @ts-ignore
+      form.setError("email", { message: result.message });
+    }
   }
 }
