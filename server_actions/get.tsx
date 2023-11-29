@@ -1,57 +1,61 @@
-"use server"
-import { createClient } from "@/utils/supabase/client"
+"use server";
+import { SBClient } from "@/utils/client/supabase";
 
 export const getNewDocNum = async () => {
-  const supabase = createClient()
+  const supabase = SBClient();
   const { data: project } = await supabase
     .from("quotations")
     .select("doc_num")
     .order("doc_num", { ascending: false })
     .limit(1)
-    .single()
-  console.log(project)
-  const latestProjectDocNum: string = project?.doc_num
-  const numeric: string = latestProjectDocNum.substring(1, latestProjectDocNum.length - 4)
-  const year: string = latestProjectDocNum.substring(latestProjectDocNum.length - 4)
+    .single();
+  console.log(project);
+  const latestProjectDocNum: string = project?.doc_num;
+  const numeric: string = latestProjectDocNum.substring(
+    1,
+    latestProjectDocNum.length - 4
+  );
+  const year: string = latestProjectDocNum.substring(
+    latestProjectDocNum.length - 4
+  );
   const currentYear: string = new Date().getFullYear().toString();
   // First Doc of the Year Reset numeric count
   // still same year ? just iterate
   // New doc
   return {
-    "newDocCount": (currentYear == year) ?
-      (parseInt(numeric, 10) + 1).toString().padStart(2, "0")
-      : "00",
-    "currentYear": currentYear
-  }
-}
+    newDocCount:
+      currentYear == year
+        ? (parseInt(numeric, 10) + 1).toString().padStart(2, "0")
+        : "00",
+    currentYear: currentYear,
+  };
+};
 
 export const getCustomers = async () => {
-  const supabase = createClient()
-  const { data: customers } = await supabase
-    .from("customers")
-    .select("*")
+  const supabase = SBClient();
+  const { data: customers } = await supabase.from("customers").select("*");
   if (customers === null) {
     throw new Error("Customers data is null");
   }
-  return customers
-}
+  return customers;
+};
 
 export const getProjects = async () => {
-  const supabase = createClient()
-  const { data: projects } = await supabase.from("project").select("*")
+  const supabase = SBClient();
+  const { data: projects } = await supabase.from("project").select("*");
   if (projects === null) {
     throw new Error("Projects data is null");
   }
-  return projects
-}
+  return projects;
+};
 
-export const getQuotationForDetailsForm = async (
-  doc_num: string
-) => {
-  const supabase = createClient()
+export const getQuotationForDetailsForm = async (doc_num: string) => {
+  const supabase = SBClient();
 
-  const { data: quotation } = await supabase.from("quotations").select(
-    ` 
+  const { data: quotation } = await supabase
+    .from("quotations")
+    .select(
+      ` 
     doc_num,
     created_date,
     status,
@@ -61,14 +65,16 @@ export const getQuotationForDetailsForm = async (
     customers(id, name),
     due_date
     `
-  ).eq('doc_num', doc_num).limit(1).single()
+    )
+    .eq("doc_num", doc_num)
+    .limit(1)
+    .single();
 
   if (quotation === null) {
-    throw new Error("Quotation data is null")
+    throw new Error("Quotation data is null");
   }
-  console.log(quotation)
+  console.log(quotation);
   if (quotation) {
-    return quotation
+    return quotation;
   }
-}
-
+};
