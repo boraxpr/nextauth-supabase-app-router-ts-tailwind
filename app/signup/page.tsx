@@ -1,22 +1,21 @@
-import Link from 'next/link'
-import { headers, cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
-import LoginSignupTabs from '@/components/LoginSignupTabs'
+import Link from "next/link";
+import { headers, cookies } from "next/headers";
+import { SBServerClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
+import LoginSignupTabs from "@/components/LoginSignupTabs";
 export default function Login({
   searchParams,
 }: {
-  searchParams: { message: string }
+  searchParams: { message: string };
 }) {
-
   const signUp = async (formData: FormData) => {
-    'use server'
+    "use server";
 
-    const origin = headers().get('origin')
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const origin = headers().get("origin");
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const cookieStore = cookies();
+    const supabase = SBServerClient(cookieStore);
 
     const { error } = await supabase.auth.signUp({
       email,
@@ -24,14 +23,14 @@ export default function Login({
       options: {
         emailRedirectTo: `${origin}/auth/callback`,
       },
-    })
+    });
 
     if (error) {
-      return redirect('/login?message=Could not authenticate user')
+      return redirect("/login?message=Could not authenticate user");
     }
 
-    return redirect('/login?message=Check email to continue sign in process')
-  }
+    return redirect("/login?message=Check email to continue sign in process");
+  };
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-start gap-4 pt-5">
@@ -52,7 +51,7 @@ export default function Login({
           className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
         >
           <polyline points="15 18 9 12 15 6" />
-        </svg>{' '}
+        </svg>{" "}
         Back
       </Link>
       <form
@@ -93,5 +92,5 @@ export default function Login({
         )}
       </form>
     </div>
-  )
+  );
 }
