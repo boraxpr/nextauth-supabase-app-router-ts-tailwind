@@ -33,16 +33,17 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `min-h-screen bg-background font-sans antialiased ${inter.className}`
+          `min-h-screen bg-muted font-sans antialiased ${inter.className}`
         )}
       >
         <Providers>
-          <ScrollArea className="w-screen h-screen">
-            <NavBar />
-            <main className="min-h-screen flex flex-col items-center">
-              {children}
-            </main>
+          <ScrollArea>
+            <div className="w-screen h-screen flex flex-col relative">
+              <NavBar />
+              <main className="flex-1 relative">{children}</main>
+            </div>
           </ScrollArea>
+
           <ScrollToTopButton />
         </Providers>
       </body>

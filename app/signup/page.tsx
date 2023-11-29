@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { headers, cookies } from "next/headers";
-import { SBServerClient } from "@/utils/supabase/server";
+import { SBServerClient } from "@/utils/server/supabase";
 import { redirect } from "next/navigation";
 import LoginSignupTabs from "@/components/LoginSignupTabs";
 export default function Login({

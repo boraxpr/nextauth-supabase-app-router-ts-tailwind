@@ -4,18 +4,23 @@ import Link from "next/link";
 import { Button, buttonVariants } from "../ui/button";
 import { Session } from "@supabase/supabase-js";
 import { useMutation } from "@tanstack/react-query";
-import { signOut } from "@/server/actions/auth";
-import { Loader2 } from "lucide-react";
-import Spinner from "../ui/spinner";
+import { useRouter } from "next/navigation";
+import { ServerActionResult } from "@/types/server";
 
 interface Props {
   session: Session | null;
-  signOutFn: () => Promise<void>;
+  signOutFn: () => Promise<ServerActionResult>;
 }
 
 export default function AuthSection(props: Props) {
+  const router = useRouter();
   const mutation = useMutation({
     mutationFn: props.signOutFn,
+    onSuccess: () => {
+      setTimeout(() => {
+        router.refresh();
+      }, 1000);
+    },
   });
   if (!props.session)
     return (
