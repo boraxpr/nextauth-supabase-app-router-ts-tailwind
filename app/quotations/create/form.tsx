@@ -5,7 +5,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { redirect, usePathname, useRouter } from "next/navigation"
-import { getQuotationForDetailsForm } from "@/server_actions/get"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Database } from "@/types/supabase"
 import { Customers, Projects } from "../page.d"
@@ -13,6 +12,9 @@ import { DatePicker, DateValidationError, PickerChangeHandlerContext } from '@mu
 import dayjs, { Dayjs } from "dayjs"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers';
+import { useRef } from 'react';
+import { useReactToPrint } from "react-to-print"
+
 export default function Form(
   { doc_num, customers, projects }: { doc_num: string, customers: Customers[], projects: Projects[] }
 ) {
@@ -150,10 +152,17 @@ export default function Form(
     console.log(value)
   }
 
+  const componentRef = useRef(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    onAfterPrint: () => console.log('Printed PDF successfully!'),
+  });
+
+
   return (
     <div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <form>
+        <form ref={componentRef}>
           <div className="w-11/12 mx-auto p-2 m-10 mt-2 mb-0 pb-0 flex flex-row justify-between">
             <div className="">
               <div className="text-left text-2xl">{(pathname.includes('/details/') ? "Quotation Details" : "Create Quotation")}</div>
@@ -161,27 +170,32 @@ export default function Form(
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-5">
-              <a href="/quotations">
+            <div className="grid grid-cols-3 gap-2">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded-3xl" onClick={handlePrint}>Print this out!</button>
+              <div>
+
                 <Button type="button" variant="outline"
                   className="py-2 px-20 rounded-3xl border-red-500 text-red-500 hover:text-red-500"
                   disabled={loading}
-                >
-                  Close
+                >   <a href="/quotations">
+                    Close </a>
                 </Button>
-              </a>
-              <Button variant="outline"
-                onClick={() => updateData({
-                  docNum: doc_num,
-                  project_name: selectedProject,
-                  grand_total: Number(grandTotal),
-                  currency: selectedCurrency,
-                  customer_id: selectedCustomer,
-                  due_date: dayjs(dueDate).toString()
-                }).then(() => router.push("/quotations"))}
-                className="py-2 px-20 rounded-full border-green-500 text-green-500 hover:text-green-500 " disabled={loading}>
-                Save
-              </Button>
+
+              </div>
+              <div>
+                <Button variant="outline"
+                  onClick={() => updateData({
+                    docNum: doc_num,
+                    project_name: selectedProject,
+                    grand_total: Number(grandTotal),
+                    currency: selectedCurrency,
+                    customer_id: selectedCustomer,
+                    due_date: dayjs(dueDate).toString()
+                  }).then(() => router.push("/quotations"))}
+                  className="py-2 px-20 rounded-full border-green-500 text-green-500 hover:text-green-500 " disabled={loading}>
+                  Save
+                </Button>
+              </div>
             </div>
           </div>
           <div className="w-9/12 mx-auto p-4 m-10 mt-0 bg-white shadow-md rounded-md border">
