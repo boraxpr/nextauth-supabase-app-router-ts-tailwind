@@ -3,14 +3,14 @@ import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
 import { ScrollToTopButton } from "@/components/scrollToTop";
 import { ReactNode } from "react";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/nav/NavBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Providers from "@/components/Providers";
 import { baseUrl } from "@/utils/server";
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
-  title: "Sphere Accounts",
+  title: "Index Page | Sphere Accounts",
   description:
     "Sphere Accounts is a simple accounts app built with Next.js and Supabase.",
 };

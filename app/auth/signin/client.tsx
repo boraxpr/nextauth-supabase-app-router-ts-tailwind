@@ -30,6 +30,7 @@ interface Props {
     email: string;
     password: string;
   }) => Promise<ServerActionResult>;
+  callbackUrl?: string;
 }
 
 export default function SignInClient(props: Props) {
@@ -44,7 +45,7 @@ export default function SignInClient(props: Props) {
   const mutation = useMutation({
     mutationFn: props.signInFn,
     onSuccess(data, variables, context) {
-      if (data.status === "success") router.push("/");
+      if (data.status === "success") router.push(props.callbackUrl || "/");
       else handleFormServerActionError(data, form);
     },
   });

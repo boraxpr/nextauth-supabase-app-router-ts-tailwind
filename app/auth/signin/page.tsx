@@ -1,11 +1,21 @@
-import { getSession, signIn } from "@/server/actions/auth";
+import { signIn } from "@/server/actions/auth";
 import SignInClient from "./client";
-import { redirect } from "next/navigation";
 
-export default async function SignIn() {
-  const session = await getSession();
-  if (session) {
-    return redirect("/");
-  }
-  return <SignInClient signInFn={signIn} />;
+export const metadata = {
+  title: "Sign In | Sphere Accounts",
+};
+
+interface Props {
+  searchParams: {
+    callbackUrl?: string;
+  };
+}
+
+export default async function SignIn(props: Props) {
+  return (
+    <SignInClient
+      signInFn={signIn}
+      callbackUrl={props.searchParams.callbackUrl}
+    />
+  );
 }

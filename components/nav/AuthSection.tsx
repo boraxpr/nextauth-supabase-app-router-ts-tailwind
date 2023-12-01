@@ -24,7 +24,7 @@ export default function AuthSection(props: Props) {
   });
   if (!props.session)
     return (
-      <div className="space-x-2">
+      <div className="space-x-3">
         <Link
           href="/auth/signin"
           className={cn(
@@ -51,14 +51,14 @@ export default function AuthSection(props: Props) {
     );
   else
     return (
-      <div className="space-x-2">
+      <div className="space-x-3">
         <Link
           href="/account"
           className={
             (buttonVariants({
               variant: "link",
             }),
-            "text-white decoration-white")
+            "text-white decoration-white text-sm font-medium")
           }
         >
           Hello, {props.session.user.email?.split("@")[0]}
