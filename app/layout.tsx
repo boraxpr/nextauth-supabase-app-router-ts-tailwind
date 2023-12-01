@@ -28,14 +28,12 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `min-h-screen bg-muted font-sans antialiased ${inter.className}`
+          `min-h-screen bg-muted font-sans antialiased ${inter.className} flex flex-col`
         )}
       >
         <Providers>
           <NavBar />
-          <main className="flex-1 relative" id="main-container">
-            {children}
-          </main>
+          <main className="flex-1 relative">{children}</main>
         </Providers>
       </body>
     </html>

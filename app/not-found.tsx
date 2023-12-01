@@ -9,7 +9,7 @@ export default function NotFound() {
   const pathName = usePathname();
   const router = useRouter();
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center flex-col gap-5">
+    <div className="h-full flex justify-center items-center flex-col gap-5 absolute top-0 left-0 right-0 bottom-0">
       <div className="flex space-x-3 justify-center items-center">
         <FileX2 className="w-16 h-16 text-primary" />
         <p className="font-bold text-primary text-3xl">404 | Page Not Found</p>
