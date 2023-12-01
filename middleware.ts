@@ -9,18 +9,18 @@ export async function middleware(req: NextRequest) {
   const supabase = createMiddlewareClient({ req, res });
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
 
   // If User is not signed in and the current path is restricted, redirect to /auth/signin?callbackUrl=...
   if (
-    !user &&
+    !session &&
     RESTRICTED_PATHS.some((path) => req.nextUrl.pathname.startsWith(path))
   ) {
     return NextResponse.redirect(
       new URL(`/auth/signin?callbackUrl=${req.nextUrl.pathname}`, req.url)
     );
-  } else if (user && req.nextUrl.pathname === "/auth/signin") {
+  } else if (session && req.nextUrl.pathname === "/auth/signin") {
     return NextResponse.redirect(new URL("/account", req.url));
   }
 

@@ -1,7 +1,6 @@
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
-import { ScrollToTopButton } from "@/components/scrollToTop";
 import { ReactNode } from "react";
 import NavBar from "@/components/nav/NavBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -33,14 +32,10 @@ export default async function RootLayout({
         )}
       >
         <Providers>
-          <ScrollArea>
-            <div className="w-screen h-screen flex flex-col relative">
-              <NavBar />
-              <main className="flex-1 relative">{children}</main>
-            </div>
-          </ScrollArea>
-
-          <ScrollToTopButton />
+          <NavBar />
+          <main className="flex-1 relative" id="main-container">
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

@@ -1,6 +1,5 @@
 import { SBServerClient } from "@/utils/server/supabase";
 import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
 import {
   SignInSchema,
   SignUpSchema,
@@ -15,8 +14,7 @@ import {
 
 export async function getSession() {
   "use server";
-  const cookieStore = cookies();
-  const supabase = SBServerClient(cookieStore);
+  const supabase = SBServerClient(cookies());
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -30,8 +28,7 @@ export async function signIn(data: SignInSchema): Promise<ServerActionResult> {
   if (!validate.success)
     return createServerActionValidationError(validate.error);
 
-  const cookieStore = cookies();
-  const supabase = SBServerClient(cookieStore);
+  const supabase = SBServerClient(cookies());
   const { error } = await supabase.auth.signInWithPassword(validate.data);
 
   if (error) return createServerActionAuthError(error.message);
@@ -41,8 +38,7 @@ export async function signIn(data: SignInSchema): Promise<ServerActionResult> {
 
 export async function signOut(): Promise<ServerActionResult> {
   "use server";
-  const cookieStore = cookies();
-  const supabase = SBServerClient(cookieStore);
+  const supabase = SBServerClient(cookies());
   await supabase.auth.signOut();
   return { status: "success" };
 }
@@ -64,8 +60,7 @@ export async function signUp(data: SignUpSchema): Promise<ServerActionResult> {
     ]);
 
   const origin = headers().get("origin");
-  const cookieStore = cookies();
-  const supabase = SBServerClient(cookieStore);
+  const supabase = SBServerClient(cookies());
   const { error } = await supabase.auth.signUp({
     email: validate.data.email,
     password: validate.data.password,

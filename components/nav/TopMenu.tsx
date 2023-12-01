@@ -24,9 +24,9 @@ export default function TopMenu() {
           key={item.name}
           href={`/${item.path}`}
           className={cn(
-            "hover:bg-white flex justify-center items-center px-2 text-white font-medium text-sm hover:text-primary pt-[3px]",
+            "hover:bg-white/95 flex justify-center items-center px-2 text-white font-medium text-sm hover:text-primary pt-[2.5px] transition-colors",
             pathName.startsWith(`/${item.path}`) &&
-              "border-white border-b-[3px]"
+              "border-white border-b-[2.5px]"
           )}
         >
           {item.name}
