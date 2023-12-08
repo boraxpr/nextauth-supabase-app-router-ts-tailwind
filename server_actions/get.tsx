@@ -1,8 +1,9 @@
 "use server";
-import { SBClient } from "@/utils/client/supabase";
-
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/types/supabase";
+import { cookies } from "next/headers";
 export const getNewDocNum = async () => {
-  const supabase = SBClient();
+  const supabase = createServerComponentClient<Database>({ cookies })
   const { data: project } = await supabase
     .from("quotations")
     .select("doc_num")
@@ -32,7 +33,7 @@ export const getNewDocNum = async () => {
 };
 
 export const getCustomers = async () => {
-  const supabase = SBClient();
+  const supabase = createServerComponentClient<Database>({ cookies })
   const { data: customers } = await supabase.from("customers").select("*");
   if (customers === null) {
     throw new Error("Customers data is null");
@@ -41,7 +42,7 @@ export const getCustomers = async () => {
 };
 
 export const getProjects = async () => {
-  const supabase = SBClient();
+  const supabase = createServerComponentClient<Database>({ cookies })
   const { data: projects } = await supabase.from("project").select("*");
   if (projects === null) {
     throw new Error("Projects data is null");
@@ -50,7 +51,7 @@ export const getProjects = async () => {
 };
 
 export const getQuotationForDetailsForm = async (doc_num: string) => {
-  const supabase = SBClient();
+  const supabase = createServerComponentClient<Database>({ cookies })
 
   const { data: quotation } = await supabase
     .from("quotations")
