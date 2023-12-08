@@ -11,7 +11,7 @@ export const getNewDocNum = async () => {
     .limit(1)
     .single();
   console.log(project);
-  const latestProjectDocNum: string = project?.doc_num;
+  const latestProjectDocNum: string = project?.doc_num || '';
   const numeric: string = latestProjectDocNum.substring(
     1,
     latestProjectDocNum.length - 4
