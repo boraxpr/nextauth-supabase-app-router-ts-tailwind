@@ -3,7 +3,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Metadata } from "next";
 import { cookies } from 'next/headers'
 import Form from "../../create/form";
-import { Customers, Projects } from "../../page.d";
+import { Customers, Projects } from "../../CPC.d";
 import { getCustomers, getProjects } from "@/server_actions/get";
 
 export function generateMetadata({ params }: {

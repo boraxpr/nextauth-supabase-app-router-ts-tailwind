@@ -7,7 +7,7 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { redirect, usePathname, useRouter } from "next/navigation"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Database } from "@/types/supabase"
-import { Customers, Projects } from "./page.d"
+import { Customers, Projects } from "../CPC.d"
 import { DatePicker, DateValidationError, PickerChangeHandlerContext } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from "dayjs"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
