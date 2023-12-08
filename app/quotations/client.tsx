@@ -82,7 +82,7 @@ export default function QuotationsClient(props: Props) {
             cell: ({ row }) => (
               <div className="space-x-2">
                 <Link
-                  href={`/quotations/${row.original.doc_num}`}
+                  href={`/quotations/details/${row.original.doc_num}`}
                   className={buttonVariants({
                     variant: "outline",
                     size: "icon",
