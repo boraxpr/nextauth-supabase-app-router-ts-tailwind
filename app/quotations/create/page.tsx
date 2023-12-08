@@ -1,6 +1,6 @@
 import { getCustomers, getNewDocNum, getProjects } from "@/server_actions/get";
 import Form from "./form";
-import { Projects, Customers } from "../page.d";
+import { Projects, Customers } from "./page.d";
 export default async function CreateQuotation() {
   const { newDocCount, currentYear } = await getNewDocNum()
   const doc_num = "Q" + newDocCount + currentYear

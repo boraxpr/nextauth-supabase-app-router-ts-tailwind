@@ -1,6 +1,6 @@
 "use client";
 
-import ScrollToTop from "@/components/ScrollToTop";
+import ScrollToTop from "@/components/scrollToTop";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { DataTable, DataTablePagination } from "@/components/ui/data-table";
