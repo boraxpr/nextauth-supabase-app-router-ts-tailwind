@@ -1,4 +1,4 @@
-name: Auto Update Branches
+name: Manually Trigger Update All Branches
 
 on:
   workflow_dispatch:  # Allow manual triggering
