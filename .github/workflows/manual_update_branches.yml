@@ -1,0 +1,25 @@
+name: Manually Trigger Update All Branches 
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Update branches
+        run: |
+          git checkout master
+          git pull origin master
+
+          branches=$(git branch --no-color | grep -v master)
+
+          for branch in $branches; do
+            git checkout $branch
+            git merge master
+            git push origin $branch
+          done
