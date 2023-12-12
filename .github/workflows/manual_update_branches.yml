@@ -1,7 +1,7 @@
-name: Manually Trigger Update All Branches 
+name: Manually Trigger Update All Branches
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # Allow manual triggering
 
 jobs:
   update-branches:
@@ -13,13 +13,31 @@ jobs:
 
       - name: Update branches
         run: |
-          git checkout master
+          # Pull the latest changes from origin master
           git pull origin master
 
+          # Get a list of all branches excluding master
           branches=$(git branch --no-color | grep -v master)
 
+          # Loop through each branch and update it
           for branch in $branches; do
             git checkout $branch
             git merge master
             git push origin $branch
+          done
+
+          # Switch back to master branch
+          git checkout master
+
+      - name: Check if branches are up-to-date
+        run: |
+          branches=$(git branch --no-color | grep -v master)
+
+          for branch in $branches; do
+            if git merge-base --is-ancestor $branch master; then
+              echo "$branch is up-to-date with master."
+            else
+              echo "ALERT: $branch is behind master. Please update."
+              exit 1
+            fi
           done
