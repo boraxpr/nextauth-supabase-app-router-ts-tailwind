@@ -11,18 +11,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Fetch latest changes from origin master
+        run: git fetch origin master
+
       - name: Update branches
         run: |
-          # Pull the latest changes from origin master
-          git pull origin master
-
           # Get a list of all branches excluding master
           branches=$(git branch --no-color | grep -v master)
 
           # Loop through each branch and update it
           for branch in $branches; do
             git checkout $branch
-            git merge master
+            git merge origin/master
             git push origin $branch
           done
 
@@ -34,7 +34,7 @@ jobs:
           branches=$(git branch --no-color | grep -v master)
 
           for branch in $branches; do
-            if git merge-base --is-ancestor $branch master; then
+            if git merge-base --is-ancestor $branch origin/master; then
               echo "$branch is up-to-date with master."
             else
               echo "ALERT: $branch is behind master. Please update."
