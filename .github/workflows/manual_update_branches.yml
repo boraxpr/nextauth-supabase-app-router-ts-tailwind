@@ -1,7 +1,9 @@
-name: Manually Trigger Update All Branches
+name: Auto Update Branches
 
 on:
-  workflow_dispatch:  # Allow manual triggering
+  schedule:
+    - cron: '0 0 * * *'  # Schedule to run daily at midnight UTC
+
 jobs:
   update-branches:
     runs-on: ubuntu-latest
@@ -17,6 +19,9 @@ jobs:
         run: |
           # Get a list of all branches excluding master
           branches=$(git branch --no-color | grep -v "master")
+
+          # Print branches for debugging
+          echo "Branches: $branches"
 
           # Loop through each branch and update it if it's behind master
           for branch in $branches; do
