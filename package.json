@@ -4,9 +4,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "update-types": "npx supabase gen types typescript --project-id \"trnzctneontojtkdkmxc\" > types/supabase.ts",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "update-types": "npx supabase gen types typescript --project-id \"trnzctneontojtkdkmxc\" > types/supabase.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

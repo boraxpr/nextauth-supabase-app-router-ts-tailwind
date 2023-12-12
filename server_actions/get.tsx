@@ -20,7 +20,7 @@ export const getNewDocNum = async () => {
   );
   const currentYear: string = new Date().getFullYear().toString();
   // First Doc of the Year Reset numeric count
-  // still same year ? just iterate
+  // still same year ? just iteratee
   // New doc
   return {
     newDocCount:
