@@ -1,1 +1,15 @@
-echo $(git branch --no-color | grep -v "master")
+name : Echo Branches
+on:
+  workflow_dispatch:  # Allow manual triggering
+jobs: 
+  Echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Fetch latest changes from origin master
+        run: git fetch origin master
+
+      - name: Echo
+        run: echo $(git branch --no-color | grep -v "master")
