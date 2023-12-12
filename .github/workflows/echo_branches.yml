@@ -12,4 +12,4 @@ jobs:
         run: git fetch origin master
 
       - name: Echo
-        run: git branch --no-color | grep -v "master"
+        run: git for-each-ref --format='%(refname:short)' refs/heads
