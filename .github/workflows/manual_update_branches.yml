@@ -19,25 +19,15 @@ jobs:
           # Get a list of all branches excluding master
           branches=$(git branch --no-color | grep -v master)
 
-          # Loop through each branch and update it
+          # Loop through each branch and update it if it's behind master
           for branch in $branches; do
-            git checkout $branch
-            git merge origin/master
-            git push origin $branch
-          done
-
-          # Switch back to master branch
-          git checkout master
-
-      - name: Check if branches are up-to-date
-        run: |
-          branches=$(git branch --no-color | grep -v master)
-
-          for branch in $branches; do
-            if git merge-base --is-ancestor $branch origin/master; then
+            if git merge-base --is-ancestor origin/master $branch; then
               echo "$branch is up-to-date with master."
             else
-              echo "ALERT: $branch is behind master. Please update."
-              exit 1
+              echo "Updating $branch with latest changes from master."
+              git checkout $branch
+              git merge origin/master
+              git push origin $branch
             fi
           done
+
