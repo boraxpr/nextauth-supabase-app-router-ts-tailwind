@@ -4,7 +4,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "update-types": "npx supabase gen types typescript --project-id \"trnzctneontojtkdkmxc\" > types/supabase.ts"
+    "update-types": "npx supabase gen types typescript --project-id \"trnzctneontojtkdkmxc\" > types/supabase.ts",
+    "lint": "next lint --dir ."
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -53,6 +54,7 @@
     "@types/node": "20.3.1",
     "@types/react": "18.2.8",
     "@types/react-dom": "18.2.5",
-    "encoding": "^0.1.13"
+    "encoding": "^0.1.13",
+    "eslint-config-next": "14.0.4"
   }
 }
