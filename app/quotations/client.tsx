@@ -30,7 +30,7 @@ export default function QuotationsClient(props: Props) {
     if (query.data?.totalPage && page > query.data?.totalPage) {
       searchParams.set("page", query.data?.totalPage.toString());
     }
-  }, [query.data?.totalPage]);
+  }, [query.data?.totalPage, page, searchParams]);
 
   return (
     <>
