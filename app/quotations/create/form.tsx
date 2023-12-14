@@ -158,6 +158,7 @@ export default function Form(
   const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    documentTitle: "Quotation-" + doc_num
   });
 
 
@@ -166,14 +167,14 @@ export default function Form(
     <div ref={componentRef}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <form >
-          <div className="w-11/12 mx-auto p-2 m-10 mt-2 mb-0 pb-0 flex flex-row justify-between">
+          <div className="w-11/12 print:w-12/12 mx-auto p-2 m-10 mt-2 mb-0 pb-0 flex flex-row justify-between">
             <div className="">
-              <div className="text-left text-2xl">{(pathname.includes('/details/') ? "Quotation Details" : "Create Quotation")}</div>
+              <div className="text-left text-2xl print:">{(pathname.includes('/details/') ? "Quotation Details" : "Create Quotation")}</div>
               <div className="text-primary inline-block text-xl">No. {doc_num}
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2 print:hidden">
               <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded-3xl" onClick={handlePrint}>Print this out!</button>
               <div>
                 <a href="/quotations">
@@ -201,7 +202,7 @@ export default function Form(
               </div>
             </div>
           </div>
-          <div className="w-9/12 mx-auto p-4 m-10 mt-0 bg-white shadow-md rounded-md border">
+          <div className="w-9/12 print:w-11/12 mx-auto p-4 m-2 bg-white shadow-md rounded-md border">
             <div className="m-5 mt-0 flex flex-row justify-between space-x-5">
               <div className="w-1/2 ">
                 <div className="mb-4 w-1/2 space-y-2">
@@ -268,7 +269,7 @@ export default function Form(
 
 
           </div>
-          <div className="w-9/12 mx-auto p-4 m-10 bg-card shadow-md rounded-md border">
+          <div className="w-9/12 print:w-11/12 mx-auto p-4 m-2 bg-card shadow-md rounded-md border">
             <div className="flex flex-row space-x-3">
               <div className="mb-4 w-9/12">
                 <div className="flex flex-row space-x-1 items-center">
@@ -304,7 +305,7 @@ export default function Form(
             </div>
           </div>
 
-          <div className="w-9/12 mx-auto pb-10 bg-card grid grid-flow-col gap-4 ">
+          <div className="w-9/12 print:w-11/12 mx-auto pb-10 bg-card grid grid-flow-col gap-4 ">
             <div className="flex flex-col col-span-1 space-y-5">
               <div className="">
                 <Textarea placeholder="Remarks"></Textarea>
@@ -315,7 +316,7 @@ export default function Form(
               <div className="border rounded-lg">
                 <div className="m-5 flex flex-row justify-between">
                   <label htmlFor="image">Image:</label>
-                  <input id="image" type="file" className="" />
+                  <input id="image" type="file" />
                 </div>
               </div>
               <div className=" flex flex-row space-x-3 items-center">
