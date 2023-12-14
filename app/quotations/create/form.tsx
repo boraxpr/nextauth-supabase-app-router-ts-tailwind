@@ -167,26 +167,87 @@ export default function Form(
     <div ref={componentRef}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <form >
-          <div className="w-11/12 print:w-12/12 mx-auto p-2 m-10 mt-2 mb-0 pb-0 flex flex-row justify-between">
+          <div className="w-9/12 print:w-11/12 mx-auto p-2 m-10 mt-2 mb-0 pb-0 flex flex-row justify-between">
             <div className="">
               <div className="text-left text-2xl print:">{(pathname.includes('/details/') ? "Quotation Details" : "Create Quotation")}</div>
               <div className="text-primary inline-block text-xl">No. {doc_num}
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 print:hidden">
-              <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded-3xl" onClick={handlePrint}>Print this out!</button>
-              <div>
-                <a href="/quotations">
-                  <Button type="button" variant="outline"
-                    className="py-2 px-20 rounded-3xl border-red-500 text-red-500 hover:text-red-500"
-                    disabled={loading}
+
+            <div>
+              <div className="grid grid-cols-3 gap-2 print:hidden">
+                <Button
+                  type="button"
+                  variant="destructive"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-3xl"
+                  onClick={handlePrint}
+                  id="printButton"
+                >
+                  <svg
+                    width="100"
+                    height="100"
+                    viewBox="0 0 100 100"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ width: '30px', height: '30px' }}
+                    className="print-icon"
                   >
-                    Close
-                  </Button>
-                </a>
-              </div>
-              <div>
+                    <style>
+                      {`
+        .line-file1-a { stroke-dasharray: 110; }
+        .line-file1-b { stroke-dasharray: 110; stroke-dashoffset: 120; }
+        .line-file1-c { stroke-dasharray: 110; stroke-dashoffset: 120; }
+
+        #printButton:hover .line-file1-a { animation: line-file1-draw-a 1.5s infinite; }
+        #printButton:hover .line-file1-b { animation: line-file1-draw-b 1.5s 300ms infinite; }
+        #printButton:hover .line-file1-c { animation: line-file1-draw-c 1.5s 600ms infinite; }
+
+        @keyframes line-file1-draw-a {
+          0% { stroke-dashoffset: 120; }
+          20% { stroke-dashoffset: 120; }
+          80% { stroke-dashoffset: 0; }
+          100% { stroke-dashoffset: -110; }
+        }
+
+        @keyframes line-file1-draw-b {
+          0% { stroke-dashoffset: 120; }
+          20% { stroke-dashoffset: 120; }
+          80% { stroke-dashoffset: 0; }
+          100% { stroke-dashoffset: -110; }
+        }
+
+        @keyframes line-file1-draw-c {
+          0% { stroke-dashoffset: 120; }
+          20% { stroke-dashoffset: 120; }
+          80% { stroke-dashoffset: 0; }
+          100% { stroke-dashoffset: -110; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .line-file1-a, .line-file1-b, .line-file1-c {
+            animation: none;
+          }
+        }
+      `}
+                    </style>
+                    <path className="fill1" d="M14 6V94H86V30.5H61.5V6H14Z" fill="#fff" strokeWidth="2px" />
+                    <path className="fill1" d="M86 30.5L61.5 6V30.5H86Z" fill="#fff" strokeWidth="2px" />
+                    <path className="stroke1" d="M86 30.5V94H14V6H61.5M86 30.5L61.5 6M86 30.5H61.5V6" stroke="#000" strokeWidth="2px" />
+                    <line className="line-file1-a stroke2" x1="27.5" y1="33" x2="48.5" y2="33" stroke="#000" strokeWidth="2px" />
+                    <line className="line-file1-b stroke2" x1="27.5" y1="53" x2="71.5" y2="53" stroke="#000" strokeWidth="2px" />
+                    <line className="line-file1-c stroke2" x1="27.5" y1="73" x2="71.5" y2="73" stroke="#000" strokeWidth="2px" />
+                  </svg>
+                </Button>
+
+                <Button type="button" variant="outline"
+                  className="rounded-3xl border-red-500 text-red-500 hover:text-red-500"
+                  disabled={loading}
+                  onClick={() => router.push("/quotations")}
+                >
+                  Close
+                </Button>
+
                 <Button variant="outline"
                   onClick={() => updateData({
                     docNum: doc_num,
@@ -196,10 +257,13 @@ export default function Form(
                     customer_id: selectedCustomer,
                     due_date: dayjs(dueDate).toString()
                   }).then(() => router.push("/quotations"))}
-                  className="py-2 px-20 rounded-full border-green-500 text-green-500 hover:text-green-500 " disabled={loading}>
+                  className="rounded-full border-green-500 text-green-500 hover:text-green-500 " disabled={loading}>
                   Save
                 </Button>
               </div>
+
+
+
             </div>
           </div>
           <div className="w-9/12 print:w-11/12 mx-auto p-4 m-2 bg-white shadow-md rounded-md border">
