@@ -18,7 +18,7 @@ import { useReactToPrint } from "react-to-print"
 export default function Form(
   { doc_num, customers, projects }: { doc_num: string, customers: Customers[], projects: Projects[] }
 ) {
-  const supabase = createClientComponentClient<Database>()
+
   const [grandTotal, setGrandTotal] = useState<string | number | null>(null)
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>('')
   const [selectedCustomer, setSelectedCustomer] = useState('')
@@ -30,6 +30,7 @@ export default function Form(
   const router = useRouter();
 
   const getPrefilledData = useCallback(async () => {
+    const supabase = createClientComponentClient<Database>()
     const { data: quotation } = await supabase.from("quotations").select(
       ` 
       doc_num,
@@ -53,14 +54,14 @@ export default function Form(
       setSelectedProject(quotation.project_name);
     }
     setLoading(false)
-  }, [supabase]);
+  }, [doc_num]);
 
   useEffect(() => {
     if (pathname.includes("details")) {
       getPrefilledData()
     }
 
-  }, [getPrefilledData])
+  }, [getPrefilledData, pathname])
 
   async function updateData(
     {
@@ -84,6 +85,7 @@ export default function Form(
     try {
       setLoading(true)
       if (pathname.includes("/create")) {
+        const supabase = createClientComponentClient<Database>()
         const { error } = await supabase.from('quotations').insert({
           created_date: new Date().toISOString(),
           currency,
@@ -104,6 +106,7 @@ export default function Form(
         if (error) throw error
       }
       if (pathname.includes('/details/')) {
+        const supabase = createClientComponentClient<Database>()
         const { error } = await supabase.from('quotations').update({
           currency,
           customer_id,
@@ -155,14 +158,14 @@ export default function Form(
   const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    onAfterPrint: () => console.log('Printed PDF successfully!'),
   });
 
 
+
   return (
-    <div>
+    <div ref={componentRef}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <form ref={componentRef}>
+        <form >
           <div className="w-11/12 mx-auto p-2 m-10 mt-2 mb-0 pb-0 flex flex-row justify-between">
             <div className="">
               <div className="text-left text-2xl">{(pathname.includes('/details/') ? "Quotation Details" : "Create Quotation")}</div>
@@ -171,16 +174,16 @@ export default function Form(
             </div>
 
             <div className="grid grid-cols-3 gap-2">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded-3xl" onClick={handlePrint}>Print this out!</button>
+              <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded-3xl" onClick={handlePrint}>Print this out!</button>
               <div>
-
-                <Button type="button" variant="outline"
-                  className="py-2 px-20 rounded-3xl border-red-500 text-red-500 hover:text-red-500"
-                  disabled={loading}
-                >   <a href="/quotations">
-                    Close </a>
-                </Button>
-
+                <a href="/quotations">
+                  <Button type="button" variant="outline"
+                    className="py-2 px-20 rounded-3xl border-red-500 text-red-500 hover:text-red-500"
+                    disabled={loading}
+                  >
+                    Close
+                  </Button>
+                </a>
               </div>
               <div>
                 <Button variant="outline"
