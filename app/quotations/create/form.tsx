@@ -243,8 +243,9 @@ export default function Form(
                 <Button type="button" variant="outline"
                   className="rounded-3xl border-red-500 text-red-500 hover:text-red-500"
                   disabled={loading}
-                ><a href="/quotations" className="">
-                    Close</a>
+                  onClick={() => router.push("/quotations")}
+                >
+                  Close
                 </Button>
 
                 <Button variant="outline"
