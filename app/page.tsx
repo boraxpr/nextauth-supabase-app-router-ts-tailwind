@@ -1,5 +1,7 @@
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getSession } from "../server/actions/auth";
 import { BarChartComponent, RadialChartComponent } from "./client";
+import { cookies } from "next/headers";
 
 export const metadata = {
   title: "Index Page | Sphere Accounts",
