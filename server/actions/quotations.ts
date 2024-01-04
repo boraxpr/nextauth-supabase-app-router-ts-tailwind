@@ -25,7 +25,7 @@ export async function getPaginatedQuotations(
         grand_total,
         customers(id, name)`
     )
-    .order("doc_num", { ascending: false })
+    .order("doc_num", { ascending: true })
     .range((page - 1) * itemsPerPage, page * itemsPerPage - 1);
 
   const totalPage = Math.ceil(count / itemsPerPage);
