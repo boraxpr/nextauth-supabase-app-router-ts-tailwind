@@ -1,9 +1,9 @@
 import { getCustomers, getNewDocNum, getProjects } from "@/server_actions/get";
 import Form from "./form";
-import { Projects, Customers } from "../CPC.d";
+import { Projects, Customers } from "@/types/collection";
 export default async function CreateQuotation() {
-  const { newDocCount, currentYear } = await getNewDocNum()
-  const doc_num = "Q" + newDocCount + currentYear
+  const { latestProjectDocNum } = await getNewDocNum()
+  const doc_num = latestProjectDocNum.toString()
   const customers: Customers[] = await getCustomers()
   const projects: Projects[] = await getProjects()
 

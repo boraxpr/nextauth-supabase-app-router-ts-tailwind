@@ -7,13 +7,13 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { redirect, usePathname, useRouter } from "next/navigation"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Database } from "@/types/supabase"
-import { Customers, Projects } from "../CPC.d"
 import { DatePicker, DateValidationError, PickerChangeHandlerContext } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from "dayjs"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { useRef } from 'react';
 import { useReactToPrint } from "react-to-print"
+import { Customers, Projects } from "@/types/collection"
 
 export default function Form(
   { doc_num, customers, projects }: { doc_num: string, customers: Customers[], projects: Projects[] }
@@ -47,8 +47,7 @@ export default function Form(
     if (quotation) {
       setGrandTotal(quotation.grand_total);
       setSelectedCurrency(quotation.currency);
-      // @ts-ignore
-      setSelectedCustomer(quotation.customers.id);
+      setSelectedCustomer(quotation.customers!.id);
       setDate(dayjs(quotation.created_date));
       setDueDate(dayjs(quotation.due_date));
       setSelectedProject(quotation.project_name);
@@ -96,7 +95,7 @@ export default function Form(
           project_name,
           status: "Draft",
         })
-        console.info(docNum,
+        console.log(docNum,
           project_name,
           grand_total,
           currency,
@@ -115,7 +114,7 @@ export default function Form(
           project_name,
           status
         }).eq('doc_num', docNum)
-        console.info(docNum,
+        console.log(docNum,
           project_name,
           grand_total,
           currency,
@@ -129,6 +128,7 @@ export default function Form(
       }
     } catch (error) {
       alert('Error Updating Data')
+      console.log(error)
       throw error
     } finally {
       setLoading(false)
@@ -169,9 +169,19 @@ export default function Form(
         <form >
           <div className="w-9/12 print:w-11/12 mx-auto p-2 m-10 mt-2 mb-0 pb-0 flex flex-row justify-between">
             <div className="">
-              <div className="text-left text-2xl print:">{(pathname.includes('/details/') ? "Quotation Details" : "Create Quotation")}</div>
-              <div className="text-primary inline-block text-xl">No. {doc_num}
-              </div>
+              <div className="text-left text-2xl print:">{
+                (pathname.includes('/details/') ? "Quotation Details" : "Create Quotation")
+              }</div>
+
+              {
+                // pathname.includes('/details/') && (
+                <div className="text-primary inline-block text-xl">
+                  No. Q{doc_num}
+                </div>
+                // )
+              }
+
+
             </div>
 
 

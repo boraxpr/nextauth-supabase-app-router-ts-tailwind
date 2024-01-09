@@ -12,9 +12,9 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import { saveProjectChanges } from "@/server_actions/update";
+import { getProjects } from "@/server_actions/get";
 
 export const metadata = {
   title: 'Projects',
@@ -22,9 +22,9 @@ export const metadata = {
 export default async function Page(
   { searchParams }: { searchParams: { message: string, project_name: string } }
 ) {
-  const supabase = createClientComponentClient()
   // Get projects list
-  const { data: projects } = await supabase.from("project").select();
+  const projects = await getProjects()
+  console.log(projects)
   // Binding to Edit Server Action
   const saveChangesWithProjectName = saveProjectChanges.bind(null, searchParams.project_name)
 
