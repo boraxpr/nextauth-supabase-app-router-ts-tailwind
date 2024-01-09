@@ -1,6 +1,6 @@
 "use client";
 
-import ScrollToTop from "@/components/scrollToTop";
+import { ScrollToTopButton } from "@/components/scrollToTop";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { DataTable, DataTablePagination } from "@/components/ui/data-table";
@@ -34,7 +34,7 @@ export default function QuotationsClient(props: Props) {
 
   return (
     <>
-      <ScrollToTop />
+      <ScrollToTopButton />
       {query.isFetching && <ScreenSpinner className="top-[3.5rem]" />}
       <DataTable
         data={query.data?.list ?? []}

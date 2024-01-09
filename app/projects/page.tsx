@@ -78,7 +78,7 @@ export default async function Page(
                     <Label htmlFor="projectDetail" className="text-right">
                       Detail
                     </Label>
-                    <Textarea id="projectDetail" name="projectDetail" defaultValue={project.detail} className="col-span-3"></Textarea>
+                    <Textarea id="projectDetail" name="projectDetail" defaultValue={project.detail!} className="col-span-3"></Textarea>
                   </div>
                 </div>
                 <div className="flex justify-end">

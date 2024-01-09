@@ -1,35 +1,26 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import { ChevronUpIcon } from "@radix-ui/react-icons";
+'use client'
+import { useEffect, useState } from 'react';
 
-export default function ScrollToTop() {
+export const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
-
-  const handleScroll = () => {
-    setIsVisible(window.scrollY > 0);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      setIsVisible(window.scrollY > 0)
+    }
+    window.addEventListener('scroll', handleScroll)
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, []);
-
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   return isVisible ? (
-    <Button
-      size="icon"
-      className="z-40 fixed bottom-5 right-5 bg-primary/80"
+    <button
       onClick={scrollToTop}
+      className="fixed bottom-4 right-4 bg-primary text-primary-foreground rounded-full p-2 cursor-pointer"
     >
-      <ChevronUpIcon className="w-6 h-6" />
-    </Button>
-  ) : (
-    <></>
-  );
+      Scroll to Top
+    </button >
+  ) : null
 }

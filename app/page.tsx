@@ -1,5 +1,7 @@
-import { getSession } from "../server/actions/auth";
+import { createClient } from "@/utils/supabase/server"
 import { BarChartComponent, RadialChartComponent } from "./client";
+import { cookies } from "next/headers";
+import { getSession } from "@/server/actions/auth";
 
 export const metadata = {
   title: "Index Page | Sphere Accounts",
@@ -7,7 +9,7 @@ export const metadata = {
 
 
 export default async function Index() {
-  const session = await getSession();
+  const session = await getSession()
   const vendorActivity = [
     { day: 'M', value: 200 },
     { day: 'T', value: 300 },

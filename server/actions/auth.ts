@@ -11,10 +11,11 @@ import {
   createServerActionAuthError,
   createServerActionValidationError,
 } from "@/utils/server/actions";
+import { createClient } from "@/utils/supabase/server";
 
 export async function getSession() {
   "use server";
-  const supabase = SBServerClient(cookies());
+  const supabase = createClient(cookies());
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -37,7 +38,7 @@ export async function signIn(data: SignInSchema): Promise<ServerActionResult> {
 }
 
 export async function signOut(): Promise<ServerActionResult> {
-  "use server";
+  "use server"
   const supabase = SBServerClient(cookies());
   await supabase.auth.signOut();
   return { status: "success" };

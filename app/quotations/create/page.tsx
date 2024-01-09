@@ -1,10 +1,9 @@
-import { getCustomers, getNewDocNum, getProjects } from "@/server_actions/get";
+import { getCustomers, getProjects } from "@/server_actions/get";
 import Form from "./form";
 import { Projects, Customers } from "@/types/collection";
-import { SBServerClient } from "@/utils/server/supabase";
 import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
 export default async function CreateQuotation() {
-  const supabase = SBServerClient(cookies())
   const { latestProjectDocNum } = await getNewDocNum()
   const doc_num = latestProjectDocNum.toString()
   const customers: Customers[] = await getCustomers()
@@ -17,3 +16,26 @@ export default async function CreateQuotation() {
     </div>
   );
 }
+
+export const getNewDocNum = async () => {
+  const supabase = createClient(cookies())
+  try {
+    const { data: latestQuotation } = await supabase
+      .from("quotations")
+      .select("doc_num")
+      .order("doc_num", { ascending: false })
+      .limit(1).single();
+
+    console.log("docNum not null")
+    const parsedDocNum = parseInt(latestQuotation!.doc_num)
+    console.log(parsedDocNum)
+    const latestProjectDocNum: number = parsedDocNum + parseInt('1');
+    console.log("new doc num : " + latestProjectDocNum)
+
+    return { latestProjectDocNum }
+  } catch (error) {
+    console.error("Error Fetching New Doc Number", error)
+    throw error;
+  }
+
+};
