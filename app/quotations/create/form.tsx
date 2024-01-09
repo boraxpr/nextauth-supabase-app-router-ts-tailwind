@@ -18,6 +18,7 @@ import { Customers, Projects } from "@/types/collection"
 export default function Form(
   { doc_num, customers, projects }: { doc_num: string, customers: Customers[], projects: Projects[] }
 ) {
+  console.log("Form doc num : " + doc_num)
 
   const [grandTotal, setGrandTotal] = useState<string | number | null>(null)
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>('')

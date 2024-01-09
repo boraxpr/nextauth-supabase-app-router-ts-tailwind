@@ -1,53 +1,35 @@
-import { Projects, QuotationDocNum, Quotations } from "@/types/collection";
+import { Customers, Projects, QuotationDocNum, Quotations } from "@/types/collection";
 import { SBServerClient } from "@/utils/server/supabase";
 import { cookies } from "next/headers";
 
 export const getNewDocNum = async () => {
-  // const currYear: number = new Date().getFullYear();
-  // const prevYear: number = new Date().getFullYear() - 1;
   const supabase = SBServerClient(cookies())
-  const { data: docNum } = await supabase
-    .from("quotations")
-    .select("doc_num")
-    .order("doc_num", { ascending: false })
-    .limit(1).returns<QuotationDocNum>();
-  console.log(typeof docNum)
+  try {
+    const { data: latestQuotation } = await supabase
+      .from("quotations")
+      .select("doc_num")
+      .order("doc_num", { ascending: false })
+      .limit(1).single();
 
-  console.log(docNum)
-  const latestProjectDocNum: number = 0;
-  if (docNum !== null) {
-    console.log("docNum not null")
-    const parsedDocNum = parseInt(docNum, 10)
-    const latestProjectDocNum: number = parsedDocNum + parseInt('1');
+    const latestProjectDocNum: number = 0;
+    if (latestQuotation !== null) {
+      console.log("docNum not null")
+      const parsedDocNum = parseInt(latestQuotation.doc_num, 10)
 
-    console.log(latestProjectDocNum + "x")
+      const latestProjectDocNum: number = parsedDocNum + parseInt('1');
+      console.log("new doc num : " + latestProjectDocNum)
+    }
+    return { latestProjectDocNum }
+  } catch (error) {
+    console.error("Error Fetching New Doc Number", error)
+    throw error;
   }
 
-  // const numeric: string = latestProjectDocNum.substring(
-  //   1,
-  //   latestProjectDocNum.length - 4
-  // );
-  // const year: string = latestProjectDocNum.substring(
-  //   latestProjectDocNum.length - 4
-  // );
-
-  // First Doc of the Year Reset numeric count
-  // still same year ? just iteratee
-  // New doc
-  // console.log(parseInt(numeric, 10) + 1)
-  return { latestProjectDocNum }
-  // {
-  //   newDocCount: numeric,
-  // currYear === parseInt(year)
-  //   ? (parseInt(numeric, 10) + 1).toString().padStart(2, "0")
-  //   : "00",
-  // currentYear: currYear,
-  // };
 };
 
 export const getCustomers = async () => {
   const supabase = SBServerClient(cookies())
-  const { data: customers } = await supabase.from("customers").select("*");
+  const { data: customers } = await supabase.from("customers").select("*").returns<Customers[]>();
   if (customers === null) {
     throw new Error("Customers data is null");
   }
