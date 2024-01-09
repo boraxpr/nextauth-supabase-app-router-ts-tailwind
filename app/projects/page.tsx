@@ -28,9 +28,8 @@ export default async function Page(
   // Binding to Edit Server Action
   const saveChangesWithProjectName = saveProjectChanges.bind(null, searchParams.project_name)
 
-
   return (
-    <div className="lg:w-3/5 sm:w-4/5">
+    <div className="justify-center flex flex-row items-center">
       <div>
         {searchParams?.message && (
           <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
@@ -41,14 +40,19 @@ export default async function Page(
       {projects!.map((project, index) => (
         <div
           key={index}
-          className="p-4 bg-[#fffffe] rounded-md my-2 shadow-lg motion-safe:animate-slide_in overflow-hidden"
+          className="p-4 bg-[#fffffe] rounded-md my-2 shadow-lg motion-safe:animate-slide_in overflow-hidden lg:w-4/5 sm:w-full"
           style={{ animationDelay: `${index * 100}ms` }} // Add delay based on index
         >
           <h2 className="font-bold text-xl mb-2">{project.project_name}</h2>
           <p className="text-gray-700">{project.detail}</p>
-          <p className="text-gray-700 text-sm text-right">
-            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'THB' }).format(project.price)}
-          </p>
+          {
+            project.price !== null && (
+              <p className="text-gray-700 text-sm text-right">
+                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'THB' })
+                  .format(project.price)}
+              </p>
+            )
+          }
           <Dialog>
             <DialogTrigger asChild>
               <Link href={`/projects?project_name=${project.project_name}`}>
@@ -93,8 +97,6 @@ export default async function Page(
         </div>
       ))}
     </div>
-
-
   );
 }
 
