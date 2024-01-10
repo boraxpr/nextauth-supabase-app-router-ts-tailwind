@@ -9,7 +9,11 @@ export const metadata = {
 
 
 export default async function Index() {
-  const session = await getSession()
+  const supabase = createClient(cookies());
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   const vendorActivity = [
     { day: 'M', value: 200 },
     { day: 'T', value: 300 },

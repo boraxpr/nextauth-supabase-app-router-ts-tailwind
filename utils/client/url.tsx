@@ -1,3 +1,4 @@
+import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export function useClientSearchParams<T extends string>(keys: Array<T>) {
@@ -25,7 +26,7 @@ export function useClientSearchParams<T extends string>(keys: Array<T>) {
   };
 
   const clearAll = (isReplace: boolean = false) => {
-    if (isReplace) router.replace(pathName, { searchParams: "" });
+    if (isReplace) router.replace(pathName);
     else router.push(pathName);
   };
 

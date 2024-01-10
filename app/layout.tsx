@@ -87,7 +87,7 @@ export default async function RootLayout({
           </div>
         </nav>
         <Providers>
-          <main className="min-h-screen flex flex-col items-center">
+          <main className="">
             {children}
           </main>
         </Providers>
