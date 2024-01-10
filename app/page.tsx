@@ -40,12 +40,12 @@ export default async function Index() {
     // Logged in 
     (
       session &&
-      <div>
-        <div className="py-5 px-20 space-y-1">
+      <div className="">
+        <div className="py-1 px-72 space-y-5">
           <div className="flex justify-between items-center">
             <div className="w-7/12 print:w-11/12 mx-5 p-4 m-2 bg-#000000 shadow-md rounded-md border">
             </div>
-            <div className="w-5/12 print:w-11/12 mx-5 p-10 m-2 bg-white shadow-md rounded-md border">
+            <div className="w-5/12 print:w-11/12 mx-5 p-10 bg-white shadow-md rounded-md border">
               <div className="text-xl font-bold">Vendor Activity</div>
               <BarChartComponent data={vendorActivity} />
             </div>
@@ -54,7 +54,7 @@ export default async function Index() {
             <div className="w-7/12 print:w-11/12 mx-5 p-4 m-2 bg-white shadow-md rounded-md border">
 
             </div>
-            <div className="w-5/12 print:w-11/12 mx-5 p-10 m-2 bg-white shadow-md rounded-md border">
+            <div className="w-5/12 print:w-11/12 mx-5 p-10 bg-white shadow-md rounded-md border">
               <div className="text-xl font-bold">Cars Sold</div>
               <RadialChartComponent data={sales} />
             </div>

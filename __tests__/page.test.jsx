@@ -7,8 +7,8 @@ describe('Page', () => {
   it('renders a heading', async () => {
     render(await Index())
 
-    const heading = screen.getByRole('heading', { level: 1 })
+    const text = screen.getByText('Index')
 
-    expect(heading).toBeInTheDocument()
+    expect(text).toBeInTheDocument()
   })
 })

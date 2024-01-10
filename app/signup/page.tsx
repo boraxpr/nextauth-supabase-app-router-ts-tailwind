@@ -34,7 +34,7 @@ export default function Login({
   }
 
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-start gap-4 pt-5">
+    <div className="">
       <Link
         href="/"
         className="absolute left-8 top-4 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
@@ -55,43 +55,44 @@ export default function Login({
         </svg>{' '}
         Back
       </Link>
-      <form
-        className="animate-in flex flex-col w-full justify-start gap-2 text-foreground border rounded-lg shadow-lg p-5"
-        action={signUp}
-      >
-        <LoginSignupTabs />
-        <label className="text-md" htmlFor="email">
-          Email
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          name="email"
-          placeholder="you@example.com"
-          required
-        />
-        <label className="text-md" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          required
-        />
-
-        <button
-          formAction={signUp}
-          className="border border-foreground/20 rounded-md px-4 py-2 mb-2 bg-primary text-primary-foreground"
+      <div className='flex justify-center'>
+        <form
+          className="animate-in flex flex-col justify-center w-1/4 gap-2 text-foreground border rounded-lg shadow-lg p-5"
+          action={signUp}
         >
-          Sign Up
-        </button>
-        {searchParams?.message && (
-          <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-            {searchParams.message}
-          </p>
-        )}
-      </form>
+          <LoginSignupTabs />
+          <label className="text-md" htmlFor="email">
+            Email
+          </label>
+          <input
+            className="rounded-md px-4 py-2 bg-inherit border mb-6"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+          <label className="text-md" htmlFor="password">
+            Password
+          </label>
+          <input
+            className="rounded-md px-4 py-2 bg-inherit border mb-6"
+            type="password"
+            name="password"
+            placeholder="••••••••"
+            required
+          />
+          <button
+            formAction={signUp}
+            className="border border-foreground/20 rounded-md px-4 py-2 mb-2 bg-primary text-primary-foreground"
+          >
+            Sign Up
+          </button>
+          {searchParams?.message && (
+            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+              {searchParams.message}
+            </p>
+          )}
+        </form>
+      </div>
     </div>
   )
 }
