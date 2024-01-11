@@ -18,9 +18,9 @@ export const ScrollToTopButton = () => {
   return isVisible ? (
     <button
       onClick={scrollToTop}
-      className="fixed bottom-4 right-4 bg-primary text-primary-foreground rounded-full p-2 cursor-pointer"
+      className="fixed bottom-14 right-4 bg-primary text-primary-foreground rounded-full p-2 cursor-pointer"
     >
-      Scroll to Top
+      ^
     </button >
   ) : null
 }

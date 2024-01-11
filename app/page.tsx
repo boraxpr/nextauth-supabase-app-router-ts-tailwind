@@ -41,7 +41,7 @@ export default async function Index() {
     (
       session &&
       <div className="">
-        <div className="py-1 px-72 space-y-5">
+        <div className="py-1 lg:px-72 space-y-5">
           <div className="flex justify-between items-center">
             <div className="w-7/12 print:w-11/12 mx-5 p-4 m-2 bg-#000000 shadow-md rounded-md border">
             </div>

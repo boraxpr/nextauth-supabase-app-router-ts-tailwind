@@ -54,7 +54,7 @@ export default function Login({
       </Link>
       <div className='flex justify-center'>
         <form
-          className="animate-in flex flex-col w-1/4 justify-start gap-2 text-foreground border p-5 shadow-lg"
+          className="animate-in flex flex-col justify-start gap-2 lg:w-1/4 text-foreground border p-5 shadow-lg"
           action={signIn}
         >
           <LoginSignupTabs />

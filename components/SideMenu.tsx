@@ -15,7 +15,7 @@ export default function SideMenu() {
         ☰
       </Button>
       {isMenuOpen && (
-        <aside className={`fixed top-0 left-0 h-full w-[21rem] bg-white shadow-lg z-50 animate-slide_in flex flex-col`}>
+        <aside className={`fixed top-0 left-0 h-full lg:w-[21rem] md:w-44 sm:w-14 bg-white shadow-lg z-50 animate-slide_in flex flex-col`}>
           <button onClick={() => setIsMenuOpen(false)} className='py-5'>
             Close
           </button>

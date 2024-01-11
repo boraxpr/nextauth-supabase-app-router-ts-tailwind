@@ -25,7 +25,7 @@ export default async function Quotations({ searchParams }: Props) {
   });
 
   return (
-    <div className="py-5 px-20 space-y-3">
+    <div className="lg:md:py-5 lg:md:px-20 space-y-3 sm:py-1 sm:px-10">
       <div className="flex justify-between items-center">
         <h1 className="font-bold text-2xl">Quotations</h1>
         <Link href="/quotations/create" className={buttonVariants()} prefetch={false}>

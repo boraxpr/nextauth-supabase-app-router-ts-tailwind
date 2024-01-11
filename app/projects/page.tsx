@@ -40,7 +40,7 @@ export default async function Page(
       {projects!.map((project, index) => (
         <div
           key={index}
-          className="p-4 bg-[#fffffe] rounded-md my-2 shadow-lg motion-safe:animate-slide_in overflow-hidden lg:w-4/5 sm:w-full"
+          className="p-4 bg-[#fffffe] rounded-md my-2 shadow-lg motion-safe:animate-slide_in overflow-hidden lg:w-4/5 w-full"
           style={{ animationDelay: `${index * 100}ms` }} // Add delay based on index
         >
           <h2 className="font-bold text-xl mb-2">{project.project_name}</h2>
