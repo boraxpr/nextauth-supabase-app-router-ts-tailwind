@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
     RESTRICTED_PATHS.some((path) => req.nextUrl.pathname.startsWith(path))
   ) {
     return NextResponse.redirect(
-      new URL(`/auth/signin?callbackUrl=${req.nextUrl.pathname}`, req.url)
+      new URL(`/auth/signin?callbackUrl=${req.nextUrl.pathname}`, req.url),
     );
   } else if (session && req.nextUrl.pathname === "/auth/signin") {
     return NextResponse.redirect(new URL("/account", req.url));

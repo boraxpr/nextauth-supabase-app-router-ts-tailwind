@@ -1,34 +1,34 @@
-import Link from 'next/link'
-import { headers, cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
-import LoginSignupTabs from '@/components/LoginSignupTabs'
-import { Button } from '@/components/ui/button'
+import Link from "next/link";
+import { headers, cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
+import LoginSignupTabs from "@/components/LoginSignupTabs";
+import { Button } from "@/components/ui/button";
 export default function Login({
   searchParams,
 }: {
-  searchParams: { message: string }
+  searchParams: { message: string };
 }) {
   const signIn = async (formData: FormData) => {
-    'use server'
+    "use server";
 
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    console.log(email, password)
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    console.log(email, password);
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
-    })
+    });
 
     if (error) {
-      return redirect('/login?message=Could not authenticate user')
+      return redirect("/login?message=Could not authenticate user");
     }
 
-    return redirect('/quotations')
-  }
+    return redirect("/quotations");
+  };
 
   return (
     <div className="">
@@ -49,10 +49,10 @@ export default function Login({
           className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
         >
           <polyline points="15 18 9 12 15 6" />
-        </svg>{' '}
+        </svg>{" "}
         Back
       </Link>
-      <div className='flex justify-center'>
+      <div className="flex justify-center">
         <form
           className="animate-in flex flex-col justify-start gap-2 lg:w-1/4 text-foreground border p-5 shadow-lg"
           action={signIn}
@@ -88,5 +88,5 @@ export default function Login({
         </form>
       </div>
     </div>
-  )
+  );
 }

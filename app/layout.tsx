@@ -22,9 +22,9 @@ export const metadata = {
 };
 
 const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-})
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default async function RootLayout({
   children,
@@ -37,25 +37,23 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
   const username = session?.user?.email?.split("@")[0];
   const signOut = async () => {
-    'use server'
+    "use server";
 
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
-    await supabase.auth.signOut()
-    return redirect('/login')
-  }
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+    await supabase.auth.signOut();
+    return redirect("/login");
+  };
 
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `min-h-screen bg-background font-sans antialiased ${inter.className}`
+          `min-h-screen bg-background font-sans antialiased ${inter.className}`,
         )}
       >
         <nav className="w-full grid grid-cols-3 border-b border-b-foreground/10 h-16 shadow-md">
-          <div className="m-2 w-2/4">
-            {session && <SideMenu />}
-          </div>
+          <div className="m-2 w-2/4">{session && <SideMenu />}</div>
           <div className="m-2 text-sm flex flex-row justify-center items-center overflow-hidden">
             {session && (
               <span>
@@ -82,14 +80,11 @@ export default async function RootLayout({
               >
                 Login
               </Link>
-            )
-            }
+            )}
           </div>
         </nav>
         <Providers>
-          <main className="">
-            {children}
-          </main>
+          <main className="">{children}</main>
         </Providers>
         <ScrollToTopButton />
       </body>

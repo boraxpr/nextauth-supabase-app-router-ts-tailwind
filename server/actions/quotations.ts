@@ -1,10 +1,10 @@
-"use server"
+"use server";
 import { SBServerClient } from "@/utils/server/supabase";
 import { cookies } from "next/headers";
 
 export async function getPaginatedQuotations(
   page: number = 1,
-  itemsPerPage: number = 10
+  itemsPerPage: number = 10,
 ) {
   "use server";
   const superbase = SBServerClient(cookies());
@@ -24,9 +24,9 @@ export async function getPaginatedQuotations(
         currency,
         project_name,
         grand_total,
-        customers(id, name)`
+        customers(id, name)`,
     )
-    .order("doc_num", { ascending: false, })
+    .order("doc_num", { ascending: false })
     .range((page - 1) * itemsPerPage, page * itemsPerPage - 1);
 
   const totalPage = Math.ceil(count / itemsPerPage);

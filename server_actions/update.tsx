@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 export const saveProjectChanges = async (
   project_name: string,
-  formData: FormData
+  formData: FormData,
 ) => {
   "use server";
   const supabase = SBClient();

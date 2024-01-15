@@ -10,7 +10,7 @@ export function ScreenSpinner({ className }: { className?: string }) {
     <div
       className={cn(
         "fixed top-0 left-0 right-0 bottom-0 z-40 flex justify-center items-center bg-white/50",
-        className
+        className,
       )}
     >
       <Spinner className="w-20 h-20" />

@@ -3,7 +3,7 @@ import { FieldValues, UseFormReturn } from "react-hook-form";
 
 export function handleFormServerActionError<T extends FieldValues>(
   result: ServerActionErrorResult,
-  form: UseFormReturn<T>
+  form: UseFormReturn<T>,
 ) {
   if (result.type === "validation") {
     result.errors.forEach((error) => {

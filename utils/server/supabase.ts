@@ -30,6 +30,6 @@ export const SBServerClient = (cookieStore: ReturnType<typeof cookies>) => {
           }
         },
       },
-    }
+    },
   );
 };

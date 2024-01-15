@@ -5,7 +5,7 @@ import {
 import { ZodError } from "zod";
 
 export const createServerActionValidationError = (
-  errors: ZodError | Array<{ field: string; message: string }>
+  errors: ZodError | Array<{ field: string; message: string }>,
 ): ServerActionErrorValidationResult => ({
   status: "error",
   type: "validation",
@@ -19,7 +19,7 @@ export const createServerActionValidationError = (
 });
 
 export const createServerActionAuthError = (
-  message: string
+  message: string,
 ): ServerActionErrorAuthResult => ({
   status: "error",
   type: "auth",

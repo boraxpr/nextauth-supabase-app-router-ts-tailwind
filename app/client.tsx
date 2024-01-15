@@ -1,10 +1,22 @@
-'use client'
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadialBarChart, RadialBar, PolarAngleAxis } from 'recharts';
+"use client";
+import React from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  RadialBarChart,
+  RadialBar,
+  PolarAngleAxis,
+} from "recharts";
 
 interface BarChartProps {
   data: {
-    day: string
+    day: string;
     value: number;
   }[];
 }
@@ -18,9 +30,13 @@ export const BarChartComponent: React.FC<BarChartProps> = ({ data }) => {
         <YAxis />
         <Tooltip />
         {/* <Legend /> */}
-        <Bar dataKey="value"
+        <Bar
+          dataKey="value"
           fill="#f37221"
-          radius={[15, 15, 0, 0]} barSize={20} stroke="#000000" />
+          radius={[15, 15, 0, 0]}
+          barSize={20}
+          stroke="#000000"
+        />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -28,27 +44,24 @@ export const BarChartComponent: React.FC<BarChartProps> = ({ data }) => {
 
 type RadialChartProps = {
   data: {
-    name: string
-    uv: number
-    fill: string
+    name: string;
+    uv: number;
+    fill: string;
   }[];
-}
-const CustomizedLegend: React.FC<{ data: RadialChartProps['data'] }> = ({ data }) => {
+};
+const CustomizedLegend: React.FC<{ data: RadialChartProps["data"] }> = ({
+  data,
+}) => {
   // Customized legend content
   return (
-    <ul className='mx-5'>
+    <ul className="mx-5">
       {data.map((entry, index) => (
-        <li
-          key={`item-${index}`}
-        >
-          {entry.name}
-        </li>
+        <li key={`item-${index}`}>{entry.name}</li>
       ))}
     </ul>
   );
 };
 export const RadialChartComponent = ({ data }: any) => {
-
   return (
     <ResponsiveContainer width="100%" height={300}>
       <RadialBarChart
@@ -59,23 +72,16 @@ export const RadialChartComponent = ({ data }: any) => {
         endAngle={-180}
         barSize={20}
       >
-        <RadialBar
-          cornerRadius={15}
-          background
-          dataKey='uv'
-        />
+        <RadialBar cornerRadius={15} background dataKey="uv" />
         <Legend
           width={120}
           height={140}
-          layout='horizontal'
-          verticalAlign='middle'
-          align='right'
-          content={<
-            CustomizedLegend data={data}
-          />}
+          layout="horizontal"
+          verticalAlign="middle"
+          align="right"
+          content={<CustomizedLegend data={data} />}
         />
-      </RadialBarChart >
+      </RadialBarChart>
     </ResponsiveContainer>
   );
 };
-

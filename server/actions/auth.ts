@@ -38,7 +38,7 @@ export async function signIn(data: SignInSchema): Promise<ServerActionResult> {
 }
 
 export async function signOut(): Promise<ServerActionResult> {
-  "use server"
+  "use server";
   const supabase = SBServerClient(cookies());
   await supabase.auth.signOut();
   return { status: "success" };

@@ -7,26 +7,31 @@ import {
   DialogTrigger,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialog"
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import { saveProjectChanges } from "@/server_actions/update";
 import { getProjects } from "@/server_actions/get";
 
 export const metadata = {
-  title: 'Projects',
-}
-export default async function Page(
-  { searchParams }: { searchParams: { message: string, project_name: string } }
-) {
+  title: "Projects",
+};
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: { message: string; project_name: string };
+}) {
   // Get projects list
-  const projects = await getProjects()
-  console.log(projects)
+  const projects = await getProjects();
+  console.log(projects);
   // Binding to Edit Server Action
-  const saveChangesWithProjectName = saveProjectChanges.bind(null, searchParams.project_name)
+  const saveChangesWithProjectName = saveProjectChanges.bind(
+    null,
+    searchParams.project_name,
+  );
 
   return (
     <div className="justify-center flex flex-row items-center">
@@ -45,14 +50,14 @@ export default async function Page(
         >
           <h2 className="font-bold text-xl mb-2">{project.project_name}</h2>
           <p className="text-gray-700">{project.detail}</p>
-          {
-            project.price !== null && (
-              <p className="text-gray-700 text-sm text-right">
-                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'THB' })
-                  .format(project.price)}
-              </p>
-            )
-          }
+          {project.price !== null && (
+            <p className="text-gray-700 text-sm text-right">
+              {new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "THB",
+              }).format(project.price)}
+            </p>
+          )}
           <Dialog>
             <DialogTrigger asChild>
               <Link href={`/projects?project_name=${project.project_name}`}>
@@ -63,7 +68,8 @@ export default async function Page(
               <DialogHeader>
                 <DialogTitle>Edit project</DialogTitle>
                 <DialogDescription>
-                  Make changes to your project here. Click save when you're done.
+                  Make changes to your project here. Click save when you're
+                  done.
                 </DialogDescription>
               </DialogHeader>
               <form action={saveChangesWithProjectName}>
@@ -72,17 +78,29 @@ export default async function Page(
                     <Label htmlFor="projectName" className="text-right">
                       Name
                     </Label>
-                    <Input id="projectName" name="projectName" defaultValue={project.project_name} className="col-span-3" />
+                    <Input
+                      id="projectName"
+                      name="projectName"
+                      defaultValue={project.project_name}
+                      className="col-span-3"
+                    />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="projectDetail" className="text-right">
                       Detail
                     </Label>
-                    <Textarea id="projectDetail" name="projectDetail" defaultValue={project.detail!} className="col-span-3"></Textarea>
+                    <Textarea
+                      id="projectDetail"
+                      name="projectDetail"
+                      defaultValue={project.detail!}
+                      className="col-span-3"
+                    ></Textarea>
                   </div>
                 </div>
                 <div className="flex justify-end">
-                  <DialogClose asChild><Button type="submit">Save changes</Button></DialogClose>
+                  <DialogClose asChild>
+                    <Button type="submit">Save changes</Button>
+                  </DialogClose>
                 </div>
               </form>
               <DialogFooter>
@@ -99,4 +117,3 @@ export default async function Page(
     </div>
   );
 }
-
